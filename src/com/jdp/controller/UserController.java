@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jdp.dao.UserDao;
-import com.jdp.model.User;
+import com.jdp.dao.*;
+import com.jdp.model.*;
 
 public class UserController extends HttpServlet {
 	
@@ -20,38 +20,36 @@ public class UserController extends HttpServlet {
     private static String ERROR = "/Error.jsp";
     private static String SUCCESS = "/Home.jsp";
     
-    private UserDao dao;
+    private UserDao daoUser;
+    private SnapshotDao daoSnapshot;
 
     public UserController() {
         super();
-        dao = new UserDao();
+        daoUser = new UserDao();
+        daoSnapshot = new SnapshotDao();
     }
 
      protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
         String forward="";
-        String action = request.getParameter("action");       
-            
-        if (action.equalsIgnoreCase("listUser")){
-        	
-        	List<User> usersList = dao.getAllUsers();
-            
+        String action = request.getParameter("action");        
+        
+        if (action.equalsIgnoreCase("listSnapshot")){       	
+        	List<SnapshotData> snapshotdatasList = daoSnapshot.getAllSnapshotDatas();
+        	forward =  "/ListSnapshotDatas.jsp";
+    	    request.setAttribute("snapshotdatas", snapshotdatasList);       	
+        }        
+        else if (action.equalsIgnoreCase("listUser")){
+        	List<User> usersList = daoUser.getAllUsers();
     	    forward =  "/ListUsers.jsp";
-
-    	    request.setAttribute("users", usersList);
-    	    
-        } else {
-        	
+    	    request.setAttribute("users", usersList);   
+        } else {	
             forward = ERROR;
         }
         
     	RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
-
     }
-    
-    
-    
     
      protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
@@ -61,24 +59,18 @@ public class UserController extends HttpServlet {
         if (action.equalsIgnoreCase("login")){
         	           
             if (request.getParameter("userlogin").isEmpty()) {
-            	
             	forward = ERROR;
-            	
             } else {
             	
-            	User myUser = new User();
-            	
+            	User myUser = new User();           	
                 myUser.setUserLogin(request.getParameter("userlogin"));
                 myUser.setUserPwd(request.getParameter("userpwd"));
                                         	
-                User user =  dao.getUserByUserLogin(request.getParameter("userlogin"));
+                User user =  daoUser.getUserByUserLogin(request.getParameter("userlogin"));
                                 
-                if (myUser.getUserPwd().equals(user.getUserPwd())) {
-                	
-                	forward = SUCCESS;
-                	
+                if (myUser.getUserPwd().equals(user.getUserPwd())) { 	
+                	forward = SUCCESS;	
                 } else {
-
                 	forward = ERROR;
                 }          		
             }
@@ -92,25 +84,21 @@ public class UserController extends HttpServlet {
             user.setUserLogin(request.getParameter("userlogin"));
             user.setUserPwd(request.getParameter("userpwd"));
             
-            dao.addUser(user);
+            daoUser.addUser(user);
             
             forward = WELCOME;
             
         } else if (action.equalsIgnoreCase("listUser")){
         	    	
-        	List<User> usersList = dao.getAllUsers();
-        	            
+        	List<User> usersList = daoUser.getAllUsers();        
     	    forward =  "/ListUsers.jsp";
-
     	    request.setAttribute("users", usersList);
     	    
-        } else {
-        	
+        } else {	
             forward = ERROR;
         }
        
     	RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
-
     }
 }
