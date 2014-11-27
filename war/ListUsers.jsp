@@ -9,28 +9,33 @@
 </head>
 <body>
 <div class="container">
-  <div class="page-header">
     <div class="row">
       <div class="span3">
       	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a>
       </div>
       <div class="span9">
-        <h1>Projects Allocations Management</h1>
+        <h2>Projects Allocations Management</h2>
       </div>
     </div>
-  </div>
-</div>  
-<div class="container">
-  <div class="row">
-	<div class="span12">
-		<h3> Choose File :</h3>
-			<form class="well" id="formulaire" method="POST" action='upload?action=uploadSnaphot' enctype="multipart/form-data">
-            	<p><input class="span12" type="file" name="file" /></p>
-                <button type="submit" class="btn btn-primary btn-small pull-right"> <i class="icon-file icon-white"></i> Upload Snapshot Data</button>
-            </form>          
+    <div class="row">
+    	<div class="tabbable"> 
+    		<ul class="nav nav-tabs">
+      			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Users Management <b class="caret"></b> </a>
+        			<ul class="dropdown-menu">
+        			    <li class="dropdown"><a href='#' onclick='invokeServlet("UserController?action=listUser")' data-toggle="tab">List Users</a></li>
+      					<li class="dropdown"><a href='#' onclick='invokeServlet("UserController?action=listSnapshot")' data-toggle="tab">List Snapshot Datas</a></li>
+        			</ul>
+      			</li>	
+      			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Administration <b class="caret"></b> </a>
+        			<ul class="dropdown-menu">
+          				<li onclick="location.href='SnapshotUpload.jsp';"><a data-toggle="tab">Upload Snapshot Data</a></li>
+        			</ul>
+      			</li>      			
+      			<li onclick="location.href='Registration.jsp';"><a data-toggle="tab">Register Users</a></li>
+    		</ul>
+		</div>  
     </div>
-  </div>
-</div>
+</div> 
 <div class="container">  
   <div class="row">
     <div class="span12">
@@ -59,5 +64,15 @@
     </div>
   </div>   
 </div>    
+
+<script type='text/javascript'>
+function invokeServlet(URL)
+{
+   location.href = URL;
+}
+
+</script>
+<script src="js/jquery.js"></script> 
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

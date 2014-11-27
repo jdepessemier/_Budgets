@@ -9,14 +9,12 @@
 </head>
 <body>
 <div class="container">
-  <div class="page-header">
-    <div class="row">
-      <div class="span3">
-      	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a>
-      </div>
-      <div class="span9">
-        <h1>Projects Allocations Management</h1>
-      </div>
+  <div class="row">
+    <div class="span3">
+    	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a>
+    </div>
+    <div class="span9">
+      <h2>Projects Allocations Management</h2>
     </div>
   </div>
   <div class="row">

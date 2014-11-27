@@ -18,7 +18,7 @@ public class UserController extends HttpServlet {
     
     private static String WELCOME = "/Welcome.jsp";
     private static String ERROR = "/Error.jsp";
-    private static String SUCCESS = "/Success.jsp";
+    private static String SUCCESS = "/Home.jsp";
     
     private UserDao dao;
 
@@ -27,6 +27,32 @@ public class UserController extends HttpServlet {
         dao = new UserDao();
     }
 
+     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+        String forward="";
+        String action = request.getParameter("action");       
+            
+        if (action.equalsIgnoreCase("listUser")){
+        	
+        	List<User> usersList = dao.getAllUsers();
+            
+    	    forward =  "/ListUsers.jsp";
+
+    	    request.setAttribute("users", usersList);
+    	    
+        } else {
+        	
+            forward = ERROR;
+        }
+        
+    	RequestDispatcher view = request.getRequestDispatcher(forward);
+        view.forward(request, response);
+
+    }
+    
+    
+    
+    
      protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
         String forward="";
@@ -74,7 +100,7 @@ public class UserController extends HttpServlet {
         	    	
         	List<User> usersList = dao.getAllUsers();
         	            
-    	    forward =  "/New.jsp";
+    	    forward =  "/ListUsers.jsp";
 
     	    request.setAttribute("users", usersList);
     	    
