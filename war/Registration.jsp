@@ -22,7 +22,7 @@
   <div class="row">
 	<div class="span4 offset4">
 		<h3>Enter your data here</h3>
-		<form class="well" id="formulaire" method="POST" action='UserController?action=register' name="frmRegisterUser">
+		<form class="well" id="formulaire" method="POST" action='DataController?action=register' name="frmRegisterUser">
 			<p><input type="text" class="span3" placeholder="Enter Lastname" name="lastname" value="<c:out value="${user.lastName}" />" /></p>
 			<p><input type="text" class="span3" placeholder="Enter Firstname" name="firstname" value="<c:out value="${user.firstName}" />" /></p>
 			<p><input type="text" class="span3" placeholder="Enter email" name="usermail" value="<c:out value="${user.userMail}" />" /></p>

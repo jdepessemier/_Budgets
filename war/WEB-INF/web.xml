@@ -11,13 +11,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   
   <servlet>
     <description></description>
-    <display-name>UserController</display-name>
-    <servlet-name>UserController</servlet-name>
-    <servlet-class>com.jdp.controller.UserController</servlet-class>
+    <display-name>DataController</display-name>
+    <servlet-name>DataController</servlet-name>
+    <servlet-class>com.jdp.controller.DataController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UserController</servlet-name>
-    <url-pattern>/UserController</url-pattern>
+    <servlet-name>DataController</servlet-name>
+    <url-pattern>/DataController</url-pattern>
   </servlet-mapping>
   
   <servlet>

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.jdp.dao.*;
 import com.jdp.model.*;
 
-public class UserController extends HttpServlet {
+public class DataController extends HttpServlet {
 	
     private static final long serialVersionUID = 1L;
     
@@ -23,7 +23,7 @@ public class UserController extends HttpServlet {
     private UserDao daoUser;
     private SnapshotDao daoSnapshot;
 
-    public UserController() {
+    public DataController() {
         super();
         daoUser = new UserDao();
         daoSnapshot = new SnapshotDao();

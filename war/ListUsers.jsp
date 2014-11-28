@@ -22,8 +22,8 @@
     		<ul class="nav nav-tabs">
       			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Users Management <b class="caret"></b> </a>
         			<ul class="dropdown-menu">
-        			    <li class="dropdown"><a href='#' onclick='invokeServlet("UserController?action=listUser")' data-toggle="tab">List Users</a></li>
-      					<li class="dropdown"><a href='#' onclick='invokeServlet("UserController?action=listSnapshot")' data-toggle="tab">List Snapshot Datas</a></li>
+        			    <li class="dropdown"><a href='#' onclick='invokeServlet("DataController?action=listUser")' data-toggle="tab">List Users</a></li>
+      					<li class="dropdown"><a href='#' onclick='invokeServlet("DataController?action=listSnapshot")' data-toggle="tab">List Snapshot Datas</a></li>
         			</ul>
       			</li>	
       			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Administration <b class="caret"></b> </a>

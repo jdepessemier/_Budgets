@@ -20,7 +20,7 @@
   <div class="row">
 	<div class="span4 offset2">
 		<h3>Login</h3>
-		<form class="well" id="formulaire" method="POST" action='UserController?action=login' name="frmLoginUser">    
+		<form class="well" id="formulaire" method="POST" action='DataController?action=login' name="frmLoginUser">    
   			<input type="text" class="span3" placeholder="Username" name="userlogin" value="<c:out value="${user.userLogin}" />" />   
   			<input type="password" class="span3" placeholder="Password" name="userpwd" value="<c:out value="${user.userPwd}" />" /> 
   			<label></label>
@@ -32,7 +32,6 @@
     	<br></br>
     	<p>Please enter your login and password to access the <strong>CIRB Projects Allocations Management</strong> Site. 
     	This is a private site reserved to registered users.</p>
-    	<p>Please Contact CIRB to get access.</p>
     </div>
   </div>
 </div>
