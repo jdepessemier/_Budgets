@@ -18,8 +18,8 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.jdp.dao.SnapshotDao;
-import com.jdp.model.SnapshotData;
+import com.jdp.dao.*;
+import com.jdp.model.*;
 import com.jdp.util.StringUtil;
 
 @SuppressWarnings("serial")
@@ -27,6 +27,8 @@ public class FileUploadHandler extends HttpServlet {
 	
 	private static String ERROR = "/Error.jsp";
 	private static String SUCCESS = "/Success.jsp";
+	private static String BUDGET_B = "Liquidation";
+	private static String BUDGET_C = "Engagement";
 	
     private SnapshotDao dao;
 
@@ -55,12 +57,14 @@ public class FileUploadHandler extends HttpServlet {
     	            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
     	            bufferedReader.readLine();
     	            String line;
+    	            
+    	            String currentProject = "";
 
     	            while ((line = bufferedReader.readLine()).charAt(0) != ';') {
     	            	
-    	            	List<String> itemList = getItemsOfLine(line,22);
+    	            	List<String> itemList = getItemsOfLine(line,22);  	            	
     	            	
-    	                String ProjectCode = itemList.get(0).toUpperCase();
+    	                String ProjectCode = itemList.get(0);
     	                ProjectCode = StringUtil.trimLeft(ProjectCode);
     	                ProjectCode = StringUtil.trimRight(ProjectCode);
     	                
@@ -79,55 +83,144 @@ public class FileUploadHandler extends HttpServlet {
     	                String ProjectYear = itemList.get(4);
     	                ProjectYear = StringUtil.trimLeft(ProjectYear);
     	                ProjectYear = StringUtil.trimRight(ProjectYear);
-
     	                   	                
     	                String DocType = itemList.get(11).toUpperCase();
     	                DocType = StringUtil.trimLeft(DocType);
     	                DocType = StringUtil.trimRight(DocType);
     	                
-    	                String Supplier = itemList.get(12).toUpperCase();
+    	                String Supplier = itemList.get(12);
     	                Supplier = StringUtil.trimLeft(Supplier);
     	                Supplier = StringUtil.trimRight(Supplier);
     	                
-    	                String SupplierRef = itemList.get(13).toUpperCase();
+    	                String SupplierRef = itemList.get(13);
     	                SupplierRef = StringUtil.trimLeft(SupplierRef);
     	                SupplierRef = StringUtil.trimRight(SupplierRef);
     	                
-    	                
-    	                String DocumentNb = itemList.get(14).toUpperCase();
+    	                String DocumentNb = itemList.get(14);
     	                DocumentNb = StringUtil.trimLeft(DocumentNb);
     	                DocumentNb = StringUtil.trimRight(DocumentNb);
     	                
-    	                String DocDate = itemList.get(15).toUpperCase();
+    	                String DocDate = itemList.get(15);
     	                DocDate = StringUtil.trimLeft(DocDate);
     	                DocDate = StringUtil.trimRight(DocDate);
     	                
-    	                String DocComment = itemList.get(16).toUpperCase();
+    	                String DocComment = itemList.get(16);
     	                DocComment = StringUtil.trimLeft(DocComment);
     	                DocComment = StringUtil.trimRight(DocComment);  
     	                
     	                String DocYear = itemList.get(17).toUpperCase();
     	                DocYear = StringUtil.trimLeft(DocYear);
     	                DocYear = StringUtil.trimRight(DocYear);
-    	                
-    	                    	                
+    	                    	                    	                
     	                double DocAmount = round(Double.valueOf(itemList.get(18).replace(",", ".")),2);
+    	                
+    	                if (!ProjectCode.equals(currentProject)) { // a new project analytical code has been detected
+    	                	
+    	                	Project savedProject = dao.getProjectByAnalyticalCode(ProjectCode);
+    	                	
+    	                	if (savedProject == null) { // the project does not exist in the database
+    	                		
+    	                		Project newProject = new Project(ProjectCode,
+   								     ProjectDesc,
+   									 ProjectDirector,
+   							         ProjectManager,
+   							         ProjectYear);
+    	                		
+    	                		dao.addProject(newProject);	
+    	                	}
+    	                	currentProject = ProjectCode;
+    	                }
+    	                
+    	                if (DocType.equals("BUDGET B")) {
+    	                	
+    	                	Budget savedBudget = dao.getBudgetByDocumentNb(DocumentNb);
+    	                	
+    	                	if (savedBudget == null) { // the budget line reference does not exist in the database
+    	                		
+    	                		Budget newBudget = new Budget(ProjectCode,
+    	                									  BUDGET_B,
+    	                									  DocumentNb,
+    	                									  DocDate,
+    	                									  DocComment,
+    	                									  DocYear,   	                									  
+    	                									  DocAmount);
+    	                		dao.addBudget(newBudget);
+    	                	}
+    	                }
+ 
+    	                if (DocType.equals("BUDGET C")) {
+    	                	
+    	                	Budget savedBudget = dao.getBudgetByDocumentNb(DocumentNb);
+    	                	
+    	                	if (savedBudget == null) { // the budget line reference does not exist in the database
+    	                		
+    	                		Budget newBudget = new Budget(ProjectCode,
+    	                									  BUDGET_C,
+    	                									  DocumentNb,
+    	                									  DocDate,
+    	                									  DocComment,
+    	                									  DocYear,   	                									  
+    	                									  DocAmount);
+    	                		dao.addBudget(newBudget);
+    	                	}
+    	                }
+    	                
+    	                if (DocType.equals("COMMANDES")) {
+    	                	
+    	                	PurchaseOrder savedPO = dao.getPOByDocumentNb(DocumentNb);
+    	                	
+    	                	if (savedPO == null) { // the purchase order line reference does not exist in the database
+    	                		
+    	                		String poNb = DocComment.substring(13, 21);
+    	                		
+    	                		PurchaseOrder newPO = new PurchaseOrder(ProjectCode,
+    	                										        poNb,
+    	                										        Supplier,
+    	                										        DocumentNb,
+    	                										        DocDate,
+    	                										        DocComment,
+    	                										        DocYear,   	                									  
+    	                										        DocAmount);
+    	                		dao.addPO(newPO);
+    	                	}
+    	                }	                
+    	                
+    	                if (DocType.equals("FACTURES")) {
+    	                	
+    	                	Bill savedBill = dao.getBillByDocumentNb(DocumentNb);
+    	                	
+    	                	if (savedBill == null) { // the bill reference does not exist in the database
+    	                		
+    	                		String poNb = DocComment.substring(2, 9);
+    	                		
+    	                		Bill newBill = new Bill(ProjectCode,
+    	                								poNb,
+    	                								SupplierRef,
+    	                								Supplier,
+    	                								DocumentNb,
+    	                								DocDate,
+    	                								DocComment,
+    	                								DocYear,   	                									  
+    	                								DocAmount);
+    	                		dao.addBill(newBill);
+    	                	}
+    	                }  	                
    	                	  	                	             
-    		            SnapshotData newSnapshotData = new SnapshotData(ProjectCode,
-    		            										        ProjectDesc,
-    		            										        ProjectDirector,
-    		            										        ProjectManager,
-    		            										        ProjectYear,
-    		            										        DocType,
-    		            										        Supplier,
-    		            										        SupplierRef,
-    		            										        DocumentNb,
-    		            										        DocDate,
-    		            										        DocComment,
-    		            										        DocYear,
-    		            										        DocAmount);
-    		                  	
-    		            dao.addSnapshotData(newSnapshotData);
+//    		            SnapshotData newSnapshotData = new SnapshotData(ProjectCode,
+//    		            										        ProjectDesc,
+//    		            										        ProjectDirector,
+//    		            										        ProjectManager,
+//    		            										        ProjectYear,
+//    		            										        DocType,
+//    		            										        Supplier,
+//    		            										        SupplierRef,
+//    		            										        DocumentNb,
+//    		            										        DocDate,
+//    		            										        DocComment,
+//    		            										        DocYear,
+//    		            										        DocAmount);
+//    		                  	
+//    		            dao.addSnapshotData(newSnapshotData);
     		            
     	            }	               
 
