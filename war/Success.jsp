@@ -6,6 +6,6 @@
 <title>Registered</title>
 </head>
 <body>
-<jsp:forward page="/DataController?action=listUser" />
+<jsp:forward page="/DataController?action=getProjects" />
 </body>
 </html>

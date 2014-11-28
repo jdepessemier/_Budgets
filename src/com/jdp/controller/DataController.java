@@ -18,7 +18,7 @@ public class DataController extends HttpServlet {
     
     private static String WELCOME = "/Welcome.jsp";
     private static String ERROR = "/Error.jsp";
-    private static String SUCCESS = "/Home.jsp";
+    private static String SUCCESS = "/Success.jsp";
     
     private UserDao daoUser;
     private SnapshotDao daoSnapshot;
@@ -38,22 +38,33 @@ public class DataController extends HttpServlet {
         	List<Project> projectsList = daoSnapshot.getProjects();
         	forward =  "/ListProjects.jsp";
     	    request.setAttribute("projects", projectsList);       	
-        }    
-        else if (action.equalsIgnoreCase("listPurchaseOrders")){       	
+        } else if (action.equalsIgnoreCase("listPurchaseOrders")){       	
         	List<PurchaseOrder> purchaseordersList = daoSnapshot.getPOs();
         	forward =  "/ListPurchaseOrders.jsp";
     	    request.setAttribute("purchaseorders", purchaseordersList);       	
-        }
-        else if (action.equalsIgnoreCase("listBills")){       	
+        } else if (action.equalsIgnoreCase("listBills")){       	
         	List<Bill> billsList = daoSnapshot.getBills();
         	forward =  "/ListBills.jsp";
     	    request.setAttribute("bills", billsList);       	
-        }
-        else if (action.equalsIgnoreCase("listUsers")){
+        } else if (action.equalsIgnoreCase("listUsers")){
+        	
+        	List<Project> projectsList = daoSnapshot.getProjects();
+        	request.setAttribute("project", projectsList);
+        	
         	List<User> usersList = daoUser.getAllUsers();
     	    forward =  "/ListUsers.jsp";
     	    request.setAttribute("users", usersList);   
-        } else {	
+        } else if (action.equalsIgnoreCase("getProject")){ 
+        	
+        	List<Project> projectsList = daoSnapshot.getProjects();
+        	request.setAttribute("project", projectsList);
+        	
+        	String projectCode =  request.getParameter("data");
+        	Project selectedProject = daoSnapshot.getProjectByAnalyticalCode(projectCode);
+        	forward =  "/ProjectDetails.jsp";
+    	    request.setAttribute("project", selectedProject);       	
+        }
+        else {	
             forward = ERROR;
         }
         
@@ -99,11 +110,31 @@ public class DataController extends HttpServlet {
             forward = WELCOME;
             
         } else if (action.equalsIgnoreCase("listUsers")){
+        	
+        	List<Project> projectsList = daoSnapshot.getProjects();
+        	request.setAttribute("project", projectsList);
         	    	
         	List<User> usersList = daoUser.getAllUsers();        
     	    forward =  "/ListUsers.jsp";
     	    request.setAttribute("users", usersList);
     	    
+        } else if (action.equalsIgnoreCase("getProjects")){       	
+        	
+        	List<Project> projectsList = daoSnapshot.getProjects();
+        	forward =  "/Home.jsp";
+    	    request.setAttribute("projects", projectsList);   
+    	    
+        } else if (action.equalsIgnoreCase("getProject")){ 
+        	      	
+        	List<Project> projectsList = daoSnapshot.getProjects();
+        	request.setAttribute("project", projectsList);
+        	
+        	String projectCode =  request.getParameter("data");
+        	Project selectedProject = daoSnapshot.getProjectByAnalyticalCode(projectCode);
+        	request.setAttribute("project", selectedProject);
+        	
+        	forward =  "/ProjectDetails.jsp";
+    	          	
         } else {	
             forward = ERROR;
         }
