@@ -34,12 +34,22 @@ public class DataController extends HttpServlet {
         String forward="";
         String action = request.getParameter("action");        
         
-        if (action.equalsIgnoreCase("listSnapshot")){       	
-        	List<SnapshotData> snapshotdatasList = daoSnapshot.getAllSnapshotDatas();
-        	forward =  "/ListSnapshotDatas.jsp";
-    	    request.setAttribute("snapshotdatas", snapshotdatasList);       	
-        }        
-        else if (action.equalsIgnoreCase("listUser")){
+        if (action.equalsIgnoreCase("listProjects")){       	
+        	List<Project> projectsList = daoSnapshot.getProjects();
+        	forward =  "/ListProjects.jsp";
+    	    request.setAttribute("projects", projectsList);       	
+        }    
+        else if (action.equalsIgnoreCase("listPurchaseOrders")){       	
+        	List<PurchaseOrder> purchaseordersList = daoSnapshot.getPOs();
+        	forward =  "/ListPurchaseOrders.jsp";
+    	    request.setAttribute("purchaseorders", purchaseordersList);       	
+        }
+        else if (action.equalsIgnoreCase("listBills")){       	
+        	List<Bill> billsList = daoSnapshot.getBills();
+        	forward =  "/ListBills.jsp";
+    	    request.setAttribute("bills", billsList);       	
+        }
+        else if (action.equalsIgnoreCase("listUsers")){
         	List<User> usersList = daoUser.getAllUsers();
     	    forward =  "/ListUsers.jsp";
     	    request.setAttribute("users", usersList);   
@@ -88,7 +98,7 @@ public class DataController extends HttpServlet {
             
             forward = WELCOME;
             
-        } else if (action.equalsIgnoreCase("listUser")){
+        } else if (action.equalsIgnoreCase("listUsers")){
         	    	
         	List<User> usersList = daoUser.getAllUsers();        
     	    forward =  "/ListUsers.jsp";
