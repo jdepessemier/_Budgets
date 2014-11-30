@@ -72,6 +72,41 @@ public class SnapshotDao {
         return budgets;
     }
     
+    public List<Budget> getBudgetsBByAnalyticalCode(String analyticalCode) {
+    	
+        List<Budget> budgetsB = new ArrayList<Budget>();
+        
+		Objectify ofy = ObjectifyService.begin();
+		Query<Budget> query = ofy.query(Budget.class);
+		
+		Budget myBudgetB = query
+				.filter("analyticalCode =", analyticalCode)
+				.filter("documentType =", "Liquidation").get();
+		
+		for (Budget budgetFromQuery : query) {
+			budgetsB.add(budgetFromQuery);
+		}
+        return budgetsB;
+    }
+    
+    public List<Budget> getBudgetsCByAnalyticalCode(String analyticalCode) {
+    	
+        List<Budget> budgetsC = new ArrayList<Budget>();
+        
+		Objectify ofy = ObjectifyService.begin();
+		Query<Budget> query = ofy.query(Budget.class);
+		
+		Budget myBudgetC = query
+				.filter("analyticalCode =", analyticalCode)
+				.filter("documentType =", "Engagement").get();
+		
+		for (Budget budgetFromQuery : query) {
+			budgetsC.add(budgetFromQuery);
+		}
+        return budgetsC;
+    }
+
+       
     public Budget getBudgetByDocumentNb(String documentnb) {
         
 		Objectify ofy = ObjectifyService.begin();
@@ -81,9 +116,7 @@ public class SnapshotDao {
 				.filter("documentNb =", documentnb).get();
 		
 		return myBudget;
-		
     }
-    
       
 //  -------------------------------------------------------------------------------------- Purchase Orders
     

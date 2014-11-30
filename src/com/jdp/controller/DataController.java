@@ -56,13 +56,24 @@ public class DataController extends HttpServlet {
     	    request.setAttribute("users", usersList);   
         } else if (action.equalsIgnoreCase("getProject")){ 
         	
+        	// Get the list of projects for the dropdown list
         	List<Project> projectsList = daoSnapshot.getProjects();
-        	request.setAttribute("project", projectsList);
+        	request.setAttribute("projectslist", projectsList);
         	
+        	// Retrieve the selected project main data
         	String projectCode =  request.getParameter("data");
         	Project selectedProject = daoSnapshot.getProjectByAnalyticalCode(projectCode);
-        	forward =  "/ProjectDetails.jsp";
-    	    request.setAttribute("project", selectedProject);       	
+        	request.setAttribute("selectedproject", selectedProject);  
+        	
+        	// Retrieve the selected project budgets data
+        	List<Budget> BudgetsB = daoSnapshot.getBudgetsBByAnalyticalCode(projectCode);
+        	request.setAttribute("budgetsB", BudgetsB);
+        	
+        	// Retrieve the selected project budgets data
+        	List<Budget> BudgetsC = daoSnapshot.getBudgetsCByAnalyticalCode(projectCode);
+        	request.setAttribute("budgetsC", BudgetsC);
+    	    
+    	    forward =  "/ProjectsDetails.jsp";
         }
         else {	
             forward = ERROR;
