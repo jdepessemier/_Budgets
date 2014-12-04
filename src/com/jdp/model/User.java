@@ -1,12 +1,13 @@
 package com.jdp.model;
 
-import javax.persistence.Id;
+import com.googlecode.objectify.annotation.*;
 
+@Entity
+@Index
 public class User {
 	
-	@Id
-	Long id;
-
+	@Id 
+	private Long id;
     private String firstName;
     private String lastName;
     private String userMail;

@@ -114,6 +114,10 @@ public class FileUploadHandler extends HttpServlet {
     	                    	                    	                
     	                double DocAmount = round(Double.valueOf(itemList.get(18).replace(",", ".")),2);
     	                
+    	                String AmountToString = new Double(DocAmount).toString();
+    	                
+    	                String DocUniqueId = ProjectCode.concat(DocType).concat(DocumentNb).concat(AmountToString);
+    	                
     	                if (!ProjectCode.equals(currentProject)) { // a new project analytical code has been detected
     	                	
     	                	Project savedProject = dao.getProjectByAnalyticalCode(ProjectCode);
@@ -121,10 +125,10 @@ public class FileUploadHandler extends HttpServlet {
     	                	if (savedProject == null) { // the project does not exist in the database
     	                		
     	                		Project newProject = new Project(ProjectCode,
-   								     ProjectDesc,
-   									 ProjectDirector,
-   							         ProjectManager,
-   							         ProjectYear);
+   								     							 ProjectDesc,
+   								     							 ProjectDirector,
+   								     							 ProjectManager,
+   								     							 ProjectYear);
     	                		
     	                		dao.addProject(newProject);	
     	                	}
@@ -133,11 +137,12 @@ public class FileUploadHandler extends HttpServlet {
     	                
     	                if (DocType.equals("BUDGET B")) {
     	                	
-    	                	Budget savedBudget = dao.getBudgetByDocumentNb(DocumentNb);
+    	                	Budget savedBudget = dao.getBudgetByUniqueId(DocUniqueId);
     	                	
     	                	if (savedBudget == null) { // the budget line reference does not exist in the database
     	                		
-    	                		Budget newBudget = new Budget(ProjectCode,
+    	                		Budget newBudget = new Budget(DocUniqueId,
+    	                									  ProjectCode,
     	                									  BUDGET_B,
     	                									  DocumentNb,
     	                									  DocDate,
@@ -150,11 +155,12 @@ public class FileUploadHandler extends HttpServlet {
  
     	                if (DocType.equals("BUDGET C")) {
     	                	
-    	                	Budget savedBudget = dao.getBudgetByDocumentNb(DocumentNb);
+    	                	Budget savedBudget = dao.getBudgetByUniqueId(DocUniqueId);
     	                	
     	                	if (savedBudget == null) { // the budget line reference does not exist in the database
     	                		
-    	                		Budget newBudget = new Budget(ProjectCode,
+    	                		Budget newBudget = new Budget(DocUniqueId,
+    	                									  ProjectCode,
     	                									  BUDGET_C,
     	                									  DocumentNb,
     	                									  DocDate,
@@ -167,13 +173,14 @@ public class FileUploadHandler extends HttpServlet {
     	                
     	                if (DocType.equals("COMMANDES")) {
     	                	
-    	                	PurchaseOrder savedPO = dao.getPOByDocumentNb(DocumentNb);
+    	                	PurchaseOrder savedPO = dao.getPOByUniqueId(DocUniqueId);
     	                	
     	                	if (savedPO == null) { // the purchase order line reference does not exist in the database
     	                		
     	                		String poNb = DocComment.substring(13, 21);
     	                		
-    	                		PurchaseOrder newPO = new PurchaseOrder(ProjectCode,
+    	                		PurchaseOrder newPO = new PurchaseOrder(DocUniqueId,
+    	                											    ProjectCode,
     	                										        poNb,
     	                										        Supplier,
     	                										        DocumentNb,
@@ -187,13 +194,14 @@ public class FileUploadHandler extends HttpServlet {
     	                
     	                if (DocType.equals("FACTURES")) {
     	                	
-    	                	Bill savedBill = dao.getBillByDocumentNb(DocumentNb);
+    	                	Bill savedBill = dao.getBillByUniqueId(DocUniqueId);
     	                	
     	                	if (savedBill == null) { // the bill reference does not exist in the database
     	                		
     	                		String poNb = DocComment.substring(2, 9);
     	                		
-    	                		Bill newBill = new Bill(ProjectCode,
+    	                		Bill newBill = new Bill(DocUniqueId,
+    	                								ProjectCode,
     	                								poNb,
     	                								SupplierRef,
     	                								Supplier,
