@@ -1,11 +1,7 @@
 package com.jdp.dao;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.jdp.model.*;
 
@@ -41,7 +37,7 @@ public class SnapshotDao {
 //			projects.add(projectFromQuery);
 //		}
 		
-		List<Project> projects = (List<Project>) ofy().load().type(Project.class);
+		List<Project> projects = (List<Project>) ofy().load().type(Project.class).list();
         return projects;
     }
     
@@ -53,7 +49,9 @@ public class SnapshotDao {
 //		Project myProject = query
 //				.filter("analyticalCode =", analyticalcode).get();
 		
-    	Project myProject = (Project) ofy().load().type(Project.class).filter("analyticalCode =", analyticalcode);
+    	List<Project> myProjects = ofy().load().type(Project.class).filter("analyticalCode =", analyticalcode).list();
+    	
+    	Project myProject = myProjects.get(0);
     	
 		return myProject;
 		
@@ -82,7 +80,7 @@ public class SnapshotDao {
 //			budgets.add(budgetFromQuery);
 //		}
 		
-		List<Budget> budgets = (List<Budget>) ofy().load().type(Budget.class);
+		List<Budget> budgets = ofy().load().type(Budget.class).list();
 		
         return budgets;
     }
@@ -102,9 +100,9 @@ public class SnapshotDao {
 //			budgetsB.add(budgetFromQuery);
 //		}
 		
-		List<Budget> budgetsB = (List<Budget>) ofy().load().type(Budget.class)
+		List<Budget> budgetsB = ofy().load().type(Budget.class)
 				.filter("analyticalCode =", analyticalCode)
-				.filter("documentType =", "Liquidation");
+				.filter("documentType =", "Liquidation").list();
 		
         return budgetsB;
     }
@@ -125,9 +123,9 @@ public class SnapshotDao {
 //			budgetsC.add(budgetFromQuery);
 //		}
 		
-		List<Budget> budgetsC = (List<Budget>) ofy().load().type(Budget.class)
+		List<Budget> budgetsC = ofy().load().type(Budget.class)
 				.filter("analyticalCode =", analyticalCode)
-				.filter("documentType =", "Liquidation");
+				.filter("documentType =", "Liquidation").list();
 		
         return budgetsC;
     }
@@ -140,8 +138,9 @@ public class SnapshotDao {
 //		Budget myBudget = query
 //				.filter("uniqueId =", id).get();
 		
-		Budget myBudget = (Budget) ofy().load().type(Budget.class)
-				.filter("uniqueId =", id);
+		List<Budget> myBudgets = ofy().load().type(Budget.class)
+				.filter("uniqueId =", id).list();
+		Budget myBudget = myBudgets.get(0);
 		
 		return myBudget;
     }
@@ -154,8 +153,9 @@ public class SnapshotDao {
 //		Budget myBudget = query
 //				.filter("documentNb =", documentnb).get();
 
-		Budget myBudget = (Budget) ofy().load().type(Budget.class)
-				.filter("documentNb =", documentnb);
+		List<Budget> myBudgets = ofy().load().type(Budget.class)
+				.filter("documentNb =", documentnb).list();
+		Budget myBudget = myBudgets.get(0);
 		
 		return myBudget;
     }
@@ -181,7 +181,7 @@ public class SnapshotDao {
 //			POs.add(poFromQuery);
 //		}
 		
-		List<PurchaseOrder> POs = (List<PurchaseOrder>) ofy().load().type(PurchaseOrder.class);
+		List<PurchaseOrder> POs = ofy().load().type(PurchaseOrder.class).list();
 		
         return POs;
     }
@@ -208,7 +208,10 @@ public class SnapshotDao {
 //		PurchaseOrder myPO = query
 //				.filter("documentNb =", documentnb).get();
 		
-		PurchaseOrder myPO = (PurchaseOrder) ofy().load().type(PurchaseOrder.class).filter("documentNb =", documentnb);
+		List<PurchaseOrder> myPOs = ofy().load().type(PurchaseOrder.class)
+				.filter("documentNb =", documentnb).list();
+		
+		PurchaseOrder myPO = myPOs.get(0);
 		
 		return myPO;
 		
@@ -237,7 +240,7 @@ public class SnapshotDao {
 //			Bills.add(billFromQuery);
 //		}
 		
-		List<Bill> Bills = (List<Bill>) ofy().load().type(Bill.class);
+		List<Bill> Bills = ofy().load().type(Bill.class).list();
 		
         return Bills;
     }   
@@ -250,7 +253,9 @@ public class SnapshotDao {
 //		Bill myBill = query
 //				.filter("uniqueId =", id).get();
 		
-		Bill myBill = (Bill) ofy().load().type(Bill.class).filter("uniqueId =", id);
+		List<Bill> myBills = ofy().load().type(Bill.class).filter("uniqueId =", id).list();
+		
+		Bill myBill = myBills.get(0);
 		
 		return myBill;
 		

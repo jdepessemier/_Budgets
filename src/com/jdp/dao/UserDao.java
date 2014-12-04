@@ -27,9 +27,7 @@ public class UserDao {
 
     public List<User> getAllUsers() {
     	
-    	List<User> users = (List<User>) ofy().load().type(User.class);
-    	
-    	
+    	List<User> users =  ofy().load().type(User.class).list();
     	
 //        List<User> users = new ArrayList<User>();
 //        
@@ -45,14 +43,16 @@ public class UserDao {
     
     public User getUserByUserLogin(String userlogin) {
     	
-    	User myUser = (User) ofy().load().type(User.class).filter("userLogin =", userlogin);
+    	List<User> myUsers = ofy().load().type(User.class).filter("userLogin =", userlogin).list();
     	        
 //		Objectify ofy = ObjectifyService.begin();
 //		Query<User> query = ofy.query(User.class);
 //		
 //		User myUser = query
 //				.filter("userLogin =", userlogin).get();
-		
+    	
+    	User myUser = myUsers.get(0);
+    	
 		if (myUser == null) {
 			
 			User user = new User();
