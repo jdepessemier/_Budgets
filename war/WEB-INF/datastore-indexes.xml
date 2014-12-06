@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<datastore-indexes
+    autoGenerate="false">  
+    <datastore-index kind="Budget" ancestor="false" source="manual">
+        <property name="analyticalCode" direction="asc"/>
+        <property name="documentType" direction="asc"/>
+        <property name="documentNb" direction="asc"/>
+    </datastore-index>
+</datastore-indexes>
