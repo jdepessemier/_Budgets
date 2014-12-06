@@ -8,9 +8,9 @@ public class User {
 	
 	@Id 
 	private Long id;
-    private String firstName;
-    private String lastName;
-    private String userMail;
+    @Unindex private String firstName;
+    @Unindex private String lastName;
+    @Unindex private String userMail;
     private String userLogin;
     private String userPwd;
     

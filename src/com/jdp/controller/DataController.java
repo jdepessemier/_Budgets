@@ -29,24 +29,32 @@ public class DataController extends HttpServlet {
         daoSnapshot = new SnapshotDao();
     }
 
+    // GET -------------------------------------------------------------------------------------------------------------------------
+    
      protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
         String forward="";
         String action = request.getParameter("action");        
         
-        if (action.equalsIgnoreCase("listProjects")){       	
+        if (action.equalsIgnoreCase("listProjects")){ //--------------------------------------------- List Projects
+        	
         	List<Project> projectsList = daoSnapshot.getProjects();
         	forward =  "/ListProjects.jsp";
     	    request.setAttribute("projects", projectsList);       	
-        } else if (action.equalsIgnoreCase("listPurchaseOrders")){       	
+        
+        } else if (action.equalsIgnoreCase("listPurchaseOrders")){ //-------------------------------- List Purchase Orders      	
+        	
         	List<PurchaseOrder> purchaseordersList = daoSnapshot.getPOs();
         	forward =  "/ListPurchaseOrders.jsp";
     	    request.setAttribute("purchaseorders", purchaseordersList);       	
-        } else if (action.equalsIgnoreCase("listBills")){       	
+        
+        } else if (action.equalsIgnoreCase("listBills")){ //----------------------------------------- List Bills      	
+        	
         	List<Bill> billsList = daoSnapshot.getBills();
         	forward =  "/ListBills.jsp";
     	    request.setAttribute("bills", billsList);       	
-        } else if (action.equalsIgnoreCase("listUsers")){
+        
+        } else if (action.equalsIgnoreCase("listUsers")){ //----------------------------------------- List Users
         	
         	List<Project> projectsList = daoSnapshot.getProjects();
         	request.setAttribute("project", projectsList);
@@ -54,7 +62,8 @@ public class DataController extends HttpServlet {
         	List<User> usersList = daoUser.getAllUsers();
     	    forward =  "/ListUsers.jsp";
     	    request.setAttribute("users", usersList);   
-        } else if (action.equalsIgnoreCase("getProject")){ 
+        
+        } else if (action.equalsIgnoreCase("getProject")){ //---------------------------------------- Get selected Project
         	
         	// Get the list of projects for the dropdown list
         	List<Project> projectsList = daoSnapshot.getProjects();
@@ -81,8 +90,11 @@ public class DataController extends HttpServlet {
         
     	RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
+        
     }
     
+     // POST ------------------------------------------------------------------------------------------------------------------------     
+     
      protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
         String forward="";
@@ -90,9 +102,11 @@ public class DataController extends HttpServlet {
             
         if (action.equalsIgnoreCase("login")){
         	           
-            if (request.getParameter("userlogin").isEmpty()) {
+            if (request.getParameter("userlogin").isEmpty()) { //------------------------------------ Error
+            	
             	forward = ERROR;
-            } else {
+            
+            } else { //------------------------------------------------------------------------------ Retrieve User
             	
             	User myUser = new User();           	
                 myUser.setUserLogin(request.getParameter("userlogin"));
@@ -106,8 +120,8 @@ public class DataController extends HttpServlet {
                 	forward = ERROR;
                 }          		
             }
-        } else if (action.equalsIgnoreCase("register")){
-        	
+        
+        } else if (action.equalsIgnoreCase("register")){ //------------------------------------------ Register User        	
         	User user = new User();
             
             user.setLastName(request.getParameter("lastname"));
@@ -120,7 +134,7 @@ public class DataController extends HttpServlet {
             
             forward = WELCOME;
             
-        } else if (action.equalsIgnoreCase("listUsers")){
+        } else if (action.equalsIgnoreCase("listUsers")){ //----------------------------------------- List Users
         	
         	List<Project> projectsList = daoSnapshot.getProjects();
         	request.setAttribute("project", projectsList);
@@ -129,25 +143,37 @@ public class DataController extends HttpServlet {
     	    forward =  "/ListUsers.jsp";
     	    request.setAttribute("users", usersList);
     	    
-        } else if (action.equalsIgnoreCase("getProjects")){       	
+        } else if (action.equalsIgnoreCase("getProjects")){ //--------------------------------------- Get Projects List      	
         	
         	List<Project> projectsList = daoSnapshot.getProjects();
         	forward =  "/Home.jsp";
     	    request.setAttribute("projects", projectsList);   
     	    
-        } else if (action.equalsIgnoreCase("getProject")){ 
+        } else if (action.equalsIgnoreCase("getProject")){ //---------------------------------------- Get selected project
         	      	
+        	// Get the list of projects for the dropdown list
         	List<Project> projectsList = daoSnapshot.getProjects();
-        	request.setAttribute("project", projectsList);
+        	request.setAttribute("projectslist", projectsList);
         	
+        	// Retrieve the selected project main data
         	String projectCode =  request.getParameter("data");
         	Project selectedProject = daoSnapshot.getProjectByAnalyticalCode(projectCode);
-        	request.setAttribute("project", selectedProject);
+        	request.setAttribute("selectedproject", selectedProject);  
+        	
+        	// Retrieve the selected project budgets data
+        	List<Budget> BudgetsB = daoSnapshot.getBudgetsBByAnalyticalCode(projectCode);
+        	request.setAttribute("budgetsB", BudgetsB);
+        	
+        	// Retrieve the selected project budgets data
+        	List<Budget> BudgetsC = daoSnapshot.getBudgetsCByAnalyticalCode(projectCode);
+        	request.setAttribute("budgetsC", BudgetsC);
         	
         	forward =  "/ProjectDetails.jsp";
     	          	
         } else {	
-            forward = ERROR;
+        
+        	forward = ERROR;
+        
         }
        
     	RequestDispatcher view = request.getRequestDispatcher(forward);

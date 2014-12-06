@@ -2,18 +2,21 @@ package com.jdp.model;
 
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 
 @Entity
+@Index
 public class Project {
 	
 	@Id
 	Long id;
 	
     private String analyticalCode;
-    private String description;
-    private String director;
-    private String manager;
-    private String year;
+    @Unindex private String description;
+    @Unindex  private String director;
+    @Unindex private String manager;
+    @Unindex private String year;
     
 	public Project() {
 		analyticalCode = "";

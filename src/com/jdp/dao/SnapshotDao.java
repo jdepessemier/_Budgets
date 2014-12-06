@@ -1,7 +1,9 @@
 package com.jdp.dao;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.List;
+
 import com.googlecode.objectify.ObjectifyService;
 import com.jdp.model.*;
 
@@ -19,66 +21,50 @@ public class SnapshotDao {
     
     public void addProject(Project project) {
     	
-    	ObjectifyService.ofy().save().entity(project);
-    	
-//    	Objectify obj = ObjectifyService.beginTransaction();
-//        obj.put(project);
-//        obj.getTxn().commit();
+    	ObjectifyService.ofy().save().entity(project).now();	
     }
     
     public List<Project> getProjects() {
-    	
-//        List<Project> projects = new ArrayList<Project>();
-//        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<Project> query = ofy.query(Project.class);
-//		
-//		for (Project projectFromQuery : query) {
-//			projects.add(projectFromQuery);
-//		}
 		
 		List<Project> projects = (List<Project>) ofy().load().type(Project.class).list();
         return projects;
     }
     
     public Project getProjectByAnalyticalCode(String analyticalcode) {
-        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<Project> query = ofy.query(Project.class);
-//		
-//		Project myProject = query
-//				.filter("analyticalCode =", analyticalcode).get();
+    	
+//    	Project myProject = new Project("41220030",
+//    			"Test",
+//    			"NJE",
+//    			"JDP",
+//    			"2014");
+    	
+//    	Key<Project> keyMyProject = Key.create(Project.class, analyticalcode);
+//    	Project myProject = ofy().load().key(keyMyProject).now();
+    	
+//    	Project myProject = ofy().load().type(Project.class).filter("analyticalCode =", analyticalcode).first().now();
+    
 		
     	List<Project> myProjects = ofy().load().type(Project.class).filter("analyticalCode =", analyticalcode).list();
+    	   	
+    	Project myProject = new Project();
     	
-    	Project myProject = myProjects.get(0);
+    	if (myProjects.size() == 0) {
+    		myProject = null;
+    	} else {
+    		myProject = myProjects.get(0);
+    	}
     	
-		return myProject;
-		
+		return myProject;	
     }
    
 //  -------------------------------------------------------------------------------------- Budgets
     
     public void addBudget(Budget budget) {
-    	
-//    	Objectify obj = ObjectifyService.beginTransaction();
-//        obj.put(budget);
-//        obj.getTxn().commit();
         
-        ObjectifyService.ofy().save().entity(budget);
-        
+        ObjectifyService.ofy().save().entity(budget).now();    
     }
     
     public List<Budget> getBudgets() {
-    	
-//        List<Budget> budgets = new ArrayList<Budget>();
-//        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<Budget> query = ofy.query(Budget.class);
-//		
-//		for (Budget budgetFromQuery : query) {
-//			budgets.add(budgetFromQuery);
-//		}
 		
 		List<Budget> budgets = ofy().load().type(Budget.class).list();
 		
@@ -86,76 +72,54 @@ public class SnapshotDao {
     }
     
     public List<Budget> getBudgetsBByAnalyticalCode(String analyticalCode) {
-    	
-//        List<Budget> budgetsB = new ArrayList<Budget>();
-//        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<Budget> query = ofy.query(Budget.class);
-//		
-//		Budget myBudgetB = query
-//				.filter("analyticalCode =", analyticalCode)
-//				.filter("documentType =", "Liquidation").get();
-//		
-//		for (Budget budgetFromQuery : query) {
-//			budgetsB.add(budgetFromQuery);
-//		}
 		
 		List<Budget> budgetsB = ofy().load().type(Budget.class)
 				.filter("analyticalCode =", analyticalCode)
-				.filter("documentType =", "Liquidation").list();
+				.filter("documentType =", "Liquidation")
+				.order("documentNb").list();
 		
         return budgetsB;
+        
     }
     
     public List<Budget> getBudgetsCByAnalyticalCode(String analyticalCode) {
-    	
-//        List<Budget> budgetsC = new ArrayList<Budget>();
-//        
-//		Objectify ofy = ObjectifyService.begin();
-//				
-//		Query<Budget> query = ofy.query(Budget.class);
-//		
-//		Budget myBudgetC = query
-//				.filter("analyticalCode =", analyticalCode)
-//				.filter("documentType =", "Engagement").get();
-//		
-//		for (Budget budgetFromQuery : query) {
-//			budgetsC.add(budgetFromQuery);
-//		}
 		
 		List<Budget> budgetsC = ofy().load().type(Budget.class)
 				.filter("analyticalCode =", analyticalCode)
-				.filter("documentType =", "Liquidation").list();
+				.filter("documentType =", "Engagement")
+				.order("documentNb").list();
 		
         return budgetsC;
     }
 
     public Budget getBudgetByUniqueId(String id) {
-        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<Budget> query = ofy.query(Budget.class);
-//		
-//		Budget myBudget = query
-//				.filter("uniqueId =", id).get();
 		
 		List<Budget> myBudgets = ofy().load().type(Budget.class)
 				.filter("uniqueId =", id).list();
-		Budget myBudget = myBudgets.get(0);
+			
+    	Budget myBudget = new Budget();
+    	
+    	if (myBudgets.size() == 0) {
+    		myBudget = null;
+    	} else {
+    		myBudget = myBudgets.get(0);
+    	}
 		
 		return myBudget;
     }
        
     public Budget getBudgetByDocumentNb(String documentnb) {
-        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<Budget> query = ofy.query(Budget.class);
-//		
-//		Budget myBudget = query
-//				.filter("documentNb =", documentnb).get();
 
 		List<Budget> myBudgets = ofy().load().type(Budget.class)
 				.filter("documentNb =", documentnb).list();
-		Budget myBudget = myBudgets.get(0);
+		
+    	Budget myBudget = new Budget();
+    	
+    	if (myBudgets.size() == 0) {
+    		myBudget = null;
+    	} else {
+    		myBudget = myBudgets.get(0);
+    	}
 		
 		return myBudget;
     }
@@ -163,23 +127,11 @@ public class SnapshotDao {
 //  -------------------------------------------------------------------------------------- Purchase Orders
     
     public void addPO(PurchaseOrder po) {
-//    	Objectify obj = ObjectifyService.beginTransaction();
-//        obj.put(po);
-//        obj.getTxn().commit();
         
-        ObjectifyService.ofy().save().entity(po);
+        ObjectifyService.ofy().save().entity(po).now();
     }
     
     public List<PurchaseOrder> getPOs() {
-    	
-//        List<PurchaseOrder> POs = new ArrayList<PurchaseOrder>();
-//        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<PurchaseOrder> query = ofy.query(PurchaseOrder.class);
-//		
-//		for (PurchaseOrder poFromQuery : query) {
-//			POs.add(poFromQuery);
-//		}
 		
 		List<PurchaseOrder> POs = ofy().load().type(PurchaseOrder.class).list();
 		
@@ -187,58 +139,47 @@ public class SnapshotDao {
     }
  
     public PurchaseOrder getPOByUniqueId(String id) {
-        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<PurchaseOrder> query = ofy.query(PurchaseOrder.class);
-//		
-//		PurchaseOrder myPO = query
-//				.filter("uniqueId =", id).get();
+    	
+    	List<PurchaseOrder> myPOs = ofy().load().type(PurchaseOrder.class)
+    			.filter("uniqueId =", id).list();
 		
-		PurchaseOrder myPO = (PurchaseOrder) ofy().load().type(PurchaseOrder.class).filter("uniqueId =", id);
+		PurchaseOrder myPO = new PurchaseOrder();
+    	
+    	if (myPOs.size() == 0) {
+    		myPO = null;
+    	} else {
+    		myPO = myPOs.get(0);
+    	}	
 		
-		return myPO;
-		
+		return myPO;	
     }
     
     public PurchaseOrder getPOByDocumentNb(String documentnb) {
-        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<PurchaseOrder> query = ofy.query(PurchaseOrder.class);
-//		
-//		PurchaseOrder myPO = query
-//				.filter("documentNb =", documentnb).get();
 		
 		List<PurchaseOrder> myPOs = ofy().load().type(PurchaseOrder.class)
 				.filter("documentNb =", documentnb).list();
 		
-		PurchaseOrder myPO = myPOs.get(0);
+		
+		PurchaseOrder myPO = new PurchaseOrder();
+    	
+    	if (myPOs.size() == 0) {
+    		myPO = null;
+    	} else {
+    		myPO = myPOs.get(0);
+    	}	
 		
 		return myPO;
-		
     }
     
      
 //  -------------------------------------------------------------------------------------- Bills
     
     public void addBill(Bill bill) {
-    	
-//    	Objectify obj = ObjectifyService.beginTransaction();
-//        obj.put(bill);
-//        obj.getTxn().commit();
         
-        ObjectifyService.ofy().save().entity(bill);
+        ObjectifyService.ofy().save().entity(bill).now();
     }
     
     public List<Bill> getBills() {
-    	
-//        List<Bill> Bills = new ArrayList<Bill>();
-//        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<Bill> query = ofy.query(Bill.class);
-//		
-//		for (Bill billFromQuery : query) {
-//			Bills.add(billFromQuery);
-//		}
 		
 		List<Bill> Bills = ofy().load().type(Bill.class).list();
 		
@@ -246,32 +187,34 @@ public class SnapshotDao {
     }   
     
     public Bill getBillByUniqueId(String id) {
-        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<Bill> query = ofy.query(Bill.class);
-//		
-//		Bill myBill = query
-//				.filter("uniqueId =", id).get();
 		
 		List<Bill> myBills = ofy().load().type(Bill.class).filter("uniqueId =", id).list();
 		
-		Bill myBill = myBills.get(0);
+		
+		Bill myBill = new Bill();
+    	
+    	if (myBills.size() == 0) {
+    		myBill = null;
+    	} else {
+    		myBill = myBills.get(0);
+    	}
 		
 		return myBill;
-		
     }
     
     public Bill getBillByDocumentNb(String documentnb) {
-        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<Bill> query = ofy.query(Bill.class);
-//		
-//		Bill myBill = query
-//				.filter("documentNb =", documentnb).get();
 		
-		Bill myBill = (Bill) ofy().load().type(Bill.class).filter("documentNb =", documentnb);
+    	List<Bill> myBills = ofy().load().type(Bill.class).filter("documentNb =", documentnb).list();
+		
+		Bill myBill = new Bill();
+    	
+    	if (myBills.size() == 0) {
+    		myBill = null;
+    	} else {
+    		myBill = myBills.get(0);
+    	}
+		
 		return myBill;
-		
     }
     
 //  -------------------------------------------------------------------------------------- Snapshots Data

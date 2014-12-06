@@ -1,10 +1,13 @@
 package com.jdp.model;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 import com.googlecode.objectify.annotation.Id;
 
-import com.googlecode.objectify.annotation.Entity;
 
 @Entity
+@Index
 public class PurchaseOrder {
 	
 	@Id
@@ -13,12 +16,12 @@ public class PurchaseOrder {
 	private String uniqueId;
     private String analyticalCode;
     private String poNb;
-    private String supplier;
+    @Unindex private String supplier;
 	private String documentNb;
-    private String documentDate;
-    private String documentDescription;
-    private String documentYear;
-    private double amount;
+	@Unindex private String documentDate;
+	@Unindex private String documentDescription;
+	@Unindex private String documentYear;
+	@Unindex private double amount;
     
 	public PurchaseOrder() {
 		uniqueId = "";

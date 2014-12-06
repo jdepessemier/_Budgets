@@ -32,7 +32,6 @@
     	<br></br>
     	<p>Please enter your login and password to access the <strong>CIRB Projects Allocations Management</strong> Site. 
     	This is a private site reserved to registered users.</p>
-    	<p>Please Register Here <a href='Registration.jsp'>Go to Registration</a></p>
     </div>
   </div>
 </div>

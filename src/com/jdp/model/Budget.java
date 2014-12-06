@@ -1,8 +1,12 @@
 package com.jdp.model;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 import com.googlecode.objectify.annotation.Id;
+
 @Entity
+@Index
 public class Budget {
 	
 	@Id
@@ -12,10 +16,10 @@ public class Budget {
     private String analyticalCode;
     private String documentType;
 	private String documentNb;
-    private String documentDate;
-    private String documentDescription;
-    private String documentYear;
-    private double amount;
+	private String documentDate;
+	@Unindex private String documentDescription;
+	@Unindex private String documentYear;
+	@Unindex private double amount;
     
 	public Budget() {
 		uniqueId = "";

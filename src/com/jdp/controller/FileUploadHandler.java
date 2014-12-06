@@ -252,8 +252,7 @@ public class FileUploadHandler extends HttpServlet {
 			view.forward(request, response);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-        
+		}  
 	}
 	
 	   private List<String> getItemsOfLine(String line, int nbOfItems ) {
