@@ -89,10 +89,16 @@
                 <tr>
                 	<td><c:out value="${budgetC.documentNb}" /></td>
                 	<td><c:out value="${budgetC.documentDescription}" /></td>
-                	<td><c:out value="${budgetC.amount}" /></td>
+                	<td align="right"><c:out value="${budgetC.amount}" /></td>
                 </tr>
             </c:forEach>
         </tbody>
+      </table>
+      <table class="table table-bordered table-striped table-condensed">
+      	<tr>
+      		<td><b>Budget Total (Engagement)</b></td>
+      		<td align="right"><b><c:out value="${totalBudgetC}"/></b></td>
+      	</tr>
       </table>
     </div>
     <div class="span6">
@@ -109,10 +115,16 @@
                 <tr>
                 	<td><c:out value="${budgetB.documentNb}" /></td>
                 	<td><c:out value="${budgetB.documentDescription}" /></td>
-                	<td><c:out value="${budgetB.amount}" /></td>
+                	<td align="right"><c:out value="${budgetB.amount}" /></td>
                 </tr>
             </c:forEach>
         </tbody>
+      </table>
+      <table class="table table-bordered table-striped table-condensed">
+      	<tr>
+      		<td><b>Budget Total (Liquidation)</b></td>
+      		<td align="right"><b><c:out value="${totalBudgetB}"/></b></td>
+      	</tr>
       </table>
     </div>
   </div>   

@@ -78,9 +78,23 @@ public class DataController extends HttpServlet {
         	List<Budget> BudgetsB = daoSnapshot.getBudgetsBByAnalyticalCode(projectCode);
         	request.setAttribute("budgetsB", BudgetsB);
         	
+        	double totalBudgetB = 0.00;
+        	
+        	for (int i = 0; i < BudgetsB.size(); i++) {
+        		totalBudgetB = totalBudgetB + BudgetsB.get(i).getAmount();
+        	}
+        	request.setAttribute("totalBudgetB", totalBudgetB);
+        	
         	// Retrieve the selected project budgets data
         	List<Budget> BudgetsC = daoSnapshot.getBudgetsCByAnalyticalCode(projectCode);
         	request.setAttribute("budgetsC", BudgetsC);
+        	
+        	double totalBudgetC = 0.00;
+        	
+        	for (int i = 0; i < BudgetsC.size(); i++) {
+        		totalBudgetC = totalBudgetC + BudgetsC.get(i).getAmount();
+        	}
+        	request.setAttribute("totalBudgetC", totalBudgetC);
     	    
     	    forward =  "/ProjectsDetails.jsp";
         }

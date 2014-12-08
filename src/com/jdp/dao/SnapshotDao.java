@@ -32,18 +32,6 @@ public class SnapshotDao {
     
     public Project getProjectByAnalyticalCode(String analyticalcode) {
     	
-//    	Project myProject = new Project("41220030",
-//    			"Test",
-//    			"NJE",
-//    			"JDP",
-//    			"2014");
-    	
-//    	Key<Project> keyMyProject = Key.create(Project.class, analyticalcode);
-//    	Project myProject = ofy().load().key(keyMyProject).now();
-    	
-//    	Project myProject = ofy().load().type(Project.class).filter("analyticalCode =", analyticalcode).first().now();
-    
-		
     	List<Project> myProjects = ofy().load().type(Project.class).filter("analyticalCode =", analyticalcode).list();
     	   	
     	Project myProject = new Project();
