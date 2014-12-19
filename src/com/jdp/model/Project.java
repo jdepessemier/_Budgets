@@ -17,6 +17,10 @@ public class Project {
     @Unindex  private String director;
     @Unindex private String manager;
     @Unindex private String year;
+    @Unindex private double totalBudgetC;
+    @Unindex private double remainingBudgetC;
+    @Unindex private double totalBudgetB;
+    @Unindex private double remainingBudgetB;    
     
 	public Project() {
 		analyticalCode = "";
@@ -24,19 +28,32 @@ public class Project {
 		director = "";
 		manager = "";
 		year = "";
+		totalBudgetC = 0.00;
+		remainingBudgetC = 0.00;
+		totalBudgetB = 0.00;
+		remainingBudgetB = 0.00;
 	}
 
 	public Project(String analyticalCode,
 			String description,
 			String director,
 			String manager,
-			String year){
+			String year,
+			double totalBudgetC,
+			double remainingBudgetC,
+			double totalBudgetB,
+			double remainingBudgetB
+			){
 	
 		this.analyticalCode = analyticalCode;
 		this.description = description;
 		this.director = director;
 		this.manager = manager;
 		this.year = year;
+		this.totalBudgetC = totalBudgetC;
+		this.remainingBudgetC = remainingBudgetC;
+		this.totalBudgetB = totalBudgetB;
+		this.remainingBudgetB = remainingBudgetB;
 	}
 	
     public String getAnalyticalCode() {
@@ -73,5 +90,33 @@ public class Project {
     public void setYear(String year) {
         this.year = year;
     }
+    
+    public double getTotalBudgetC() {
+        return totalBudgetC;
+    }
+    public void setTotalBudgetC(double totalbudgetC) {
+        this.totalBudgetC = totalbudgetC;
+    }
+ 
+    public double getRemainingBudgetC() {
+        return remainingBudgetC;
+    }
+    public void setRemainingBudgetC(double remainingbudgetC) {
+        this.remainingBudgetC = remainingbudgetC;
+    }
+    
+    public double getTotalBudgetB() {
+        return totalBudgetB;
+    }
+    public void setTotalBudgetB(double totalbudgetB) {
+        this.totalBudgetB = totalbudgetB;
+    }
    
+    public double getRemainingBudgetB() {
+        return remainingBudgetB;
+    }
+    public void setRemainingBudgetB(double remainingbudgetB) {
+        this.remainingBudgetB = remainingbudgetB;
+    }
+    
 }

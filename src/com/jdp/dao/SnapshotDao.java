@@ -205,29 +205,40 @@ public class SnapshotDao {
 		return myBill;
     }
     
-//  -------------------------------------------------------------------------------------- Snapshots Data
+//  -------------------------------------------------------------------------------------- Snapshot Data
     
-//    public void addSnapshotData(SnapshotData SnapshotData) {
-////    	Objectify obj = ObjectifyService.beginTransaction();
-////        obj.put(SnapshotData);
-////        obj.getTxn().commit();
-//        
-//        ObjectifyService.ofy().save().entity(SnapshotData);
-//    }
-//    
-//    public List<SnapshotData> getAllSnapshotDatas() {
-//    	
-//        List<SnapshotData> SnapshotDatas = new ArrayList<SnapshotData>();
-//        
-//		Objectify ofy = ObjectifyService.begin();
-//		Query<SnapshotData> query = ofy.query(SnapshotData.class);
-//		
-//		for (SnapshotData snapshotdataFromQuery : query) {
-//			SnapshotDatas.add(snapshotdataFromQuery);
-//		}
-//		
-//        return SnapshotDatas;
-//    }
-//    
-
+    public void addSnapshotData(SnapshotData SnapshotData) {
+        
+        ObjectifyService.ofy().save().entity(SnapshotData).now();
+    }
+    
+    public List<SnapshotData> getAllSnapshotDatas() {
+    	
+    	List<SnapshotData> SnapshotDatas = ofy().load().type(SnapshotData.class).list();
+    	
+        return SnapshotDatas;
+    }
+    
+    public List<SnapshotData> getnapshotDataByDirector(String director) {
+		
+    	List<SnapshotData> SnapshotDatasByDirector = ofy().load().type(SnapshotData.class).filter("projectDirector =", director).list();
+		
+		return SnapshotDatasByDirector;
+    }
+    
+    public SnapshotData getSnapshotDataByAnalyticalCode(String analyticalcode) {
+    	
+    	List<SnapshotData> mySnapshotDatas = ofy().load().type(SnapshotData.class).filter("projectCA =", analyticalcode).list();
+    	   	
+    	SnapshotData mySnapshotData = new SnapshotData();
+    	
+    	if (mySnapshotDatas.size() == 0) {
+    		mySnapshotData = null;
+    	} else {
+    		mySnapshotData = mySnapshotDatas.get(0);
+    	}
+    	
+		return mySnapshotData;	
+    }
+    
 }

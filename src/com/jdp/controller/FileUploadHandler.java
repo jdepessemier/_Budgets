@@ -42,7 +42,118 @@ public class FileUploadHandler extends HttpServlet {
 		String forward="";
         String action = request.getParameter("action");
         
-        if (action.equalsIgnoreCase("uploadSnaphot")){
+        if (action.equalsIgnoreCase("uploadSnaphotData")){ //------------------------------------------------
+        	
+        	ServletFileUpload upload = new ServletFileUpload();
+        	
+        	try {
+    			FileItemIterator it = upload.getItemIterator(request);
+    			FileItemStream item = it.next();
+
+    	        InputStream stream = item.openStream();
+    	        
+    	        try {
+    	            InputStreamReader inputStreamReader = new InputStreamReader(stream, "ISO-8859-1");
+    	            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+    	            bufferedReader.readLine();
+    	            String line;
+    	            
+    	            String currentProject = "";
+
+    	            while ((line = bufferedReader.readLine()).charAt(0) != ';') {
+    	            	
+    	            	List<String> itemList = getItemsOfLine(line,9);
+    	            	
+    	                String ProjectCode = itemList.get(0);
+    	                ProjectCode = StringUtil.trimLeft(ProjectCode);
+    	                ProjectCode = StringUtil.trimRight(ProjectCode);
+    	                
+    	                String ProjectDesc = itemList.get(1).toUpperCase();
+    	                ProjectDesc = StringUtil.trimLeft(ProjectDesc);
+    	                ProjectDesc = StringUtil.trimRight(ProjectDesc);
+    	                
+    	                String ProjectDirector = itemList.get(2).toUpperCase();
+    	                ProjectDirector = StringUtil.trimLeft(ProjectDirector);
+    	                ProjectDirector = StringUtil.trimRight(ProjectDirector);
+
+    	                String ProjectManager = itemList.get(3).toUpperCase();
+    	                ProjectManager = StringUtil.trimLeft(ProjectManager);
+    	                ProjectManager = StringUtil.trimRight(ProjectManager);
+    	                
+    	                double reviewedBudgetCAmount = 0.00;
+    	                String readAmount = itemList.get(4);
+    	                if (!readAmount.isEmpty()){
+    	                	reviewedBudgetCAmount = round(Double.valueOf(itemList.get(4).replace(",", ".")),2);
+    	                } 
+    	                
+    	                double realizeddBudgetCAmount = 0.00;       
+    	                readAmount = itemList.get(5);
+    	                if (!readAmount.isEmpty()){
+    	                	realizeddBudgetCAmount = round(Double.valueOf(itemList.get(5).replace(",", ".")),2);
+    	                }
+ 
+    	                double availableBudgetCAmount = 0.00;	                	
+    	                readAmount = itemList.get(6);
+    	                if (!readAmount.isEmpty()){
+    	                	availableBudgetCAmount = round(Double.valueOf(itemList.get(6).replace(",", ".")),2);    	                } else {
+    	                }
+ 
+    	                double reviewedBudgetBAmount = 0.00;
+    	                readAmount = itemList.get(7);
+    	                if (!readAmount.isEmpty()){
+    	                	reviewedBudgetBAmount = round(Double.valueOf(itemList.get(7).replace(",", ".")),2);
+    	                }
+    	                
+    	                double realizedBudgetBAmount = 0.00;
+    	                readAmount = itemList.get(8);
+    	                if (!readAmount.isEmpty()){
+    	                	realizedBudgetBAmount = round(Double.valueOf(itemList.get(8).replace(",", ".")),2);
+    	                }
+ 
+    	                double availableBudgetBAmount = 0.00;
+    	                readAmount = itemList.get(9);
+    	                if (!readAmount.isEmpty()){
+    	                	availableBudgetBAmount = round(Double.valueOf(itemList.get(9).replace(",", ".")),2);
+    	                }     	                
+    	                
+    	                if (!ProjectCode.equals(currentProject)) { // a new project analytical code has been detected
+    	                	
+    	                	SnapshotData savedSnapshotData = dao.getSnapshotDataByAnalyticalCode(ProjectCode);
+    	                	
+    	                	if (savedSnapshotData == null) { // the project does not exist in the database
+    	                		
+    	                		SnapshotData newSnapshotData = new SnapshotData(ProjectCode,
+		 									ProjectDesc,
+		 									ProjectDirector,
+		 									ProjectManager,
+		 									reviewedBudgetCAmount,
+		 									realizeddBudgetCAmount,
+		 									availableBudgetCAmount,
+		 									reviewedBudgetBAmount,
+		 									realizedBudgetBAmount,
+		 									availableBudgetBAmount);
+
+    	                		dao.addSnapshotData(newSnapshotData);
+
+    	                	}   	
+    	                	currentProject = ProjectCode;
+    	                }
+    	            }
+    	            
+    	        } finally {
+    	            stream.close();
+    	            forward = SUCCESS;   	            
+    	        }   	        
+    		} catch (IOException e) {
+    			forward = ERROR;
+    			e.printStackTrace();
+    		} catch (FileUploadException e) {
+    			forward = ERROR;
+    			e.printStackTrace();
+    		}        	   		
+        }      
+        
+        if (action.equalsIgnoreCase("uploadSnaphot")){ //-------------------------------------------------
         	
         	ServletFileUpload upload = new ServletFileUpload();
         	
@@ -128,7 +239,11 @@ public class FileUploadHandler extends HttpServlet {
    								     							 ProjectDesc,
    								     							 ProjectDirector,
    								     							 ProjectManager,
-   								     							 ProjectYear);
+   								     							 ProjectYear,
+   								     							 0.00,
+   								     							 0.00,
+   								     							 0.00,
+   								     							 0.00);
     	                		
     	                		dao.addProject(newProject);	
     	                	}
@@ -212,39 +327,20 @@ public class FileUploadHandler extends HttpServlet {
     	                								DocAmount);
     	                		dao.addBill(newBill);
     	                	}
-    	                }  	                
-   	                	  	                	             
-//    		            SnapshotData newSnapshotData = new SnapshotData(ProjectCode,
-//    		            										        ProjectDesc,
-//    		            										        ProjectDirector,
-//    		            										        ProjectManager,
-//    		            										        ProjectYear,
-//    		            										        DocType,
-//    		            										        Supplier,
-//    		            										        SupplierRef,
-//    		            										        DocumentNb,
-//    		            										        DocDate,
-//    		            										        DocComment,
-//    		            										        DocYear,
-//    		            										        DocAmount);
-//    		                  	
-//    		            dao.addSnapshotData(newSnapshotData);
-    		            
+    	                }  	                   		            
     	            }	               
 
     	        } finally {
     	            stream.close();
     	            forward = SUCCESS;   	            
-    	        }
-    	        
+    	        }   	        
     		} catch (IOException e) {
     			forward = ERROR;
     			e.printStackTrace();
     		} catch (FileUploadException e) {
     			forward = ERROR;
     			e.printStackTrace();
-    		}        	
-        		
+    		}        	   		
         }
 		
     	RequestDispatcher view = request.getRequestDispatcher(forward);

@@ -34,7 +34,7 @@ public class DataController extends HttpServlet {
      protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
         String forward="";
-        String action = request.getParameter("action");        
+        String action = request.getParameter("action");      
         
         if (action.equalsIgnoreCase("listProjects")){ //--------------------------------------------- List Projects
         	
@@ -42,6 +42,12 @@ public class DataController extends HttpServlet {
         	forward =  "/ListProjects.jsp";
     	    request.setAttribute("projects", projectsList);       	
         
+        } else if (action.equalsIgnoreCase("projectsStatus")) {
+        	
+        	List<SnapshotData> SnapshotDatasList = daoSnapshot.getAllSnapshotDatas();
+        	forward = "/ProjectsStatus.jsp";
+        	request.setAttribute("snapshots", SnapshotDatasList);
+        	
         } else if (action.equalsIgnoreCase("listPurchaseOrders")){ //-------------------------------- List Purchase Orders      	
         	
         	List<PurchaseOrder> purchaseordersList = daoSnapshot.getPOs();
@@ -85,6 +91,8 @@ public class DataController extends HttpServlet {
         	}
         	request.setAttribute("totalBudgetB", totalBudgetB);
         	
+        	selectedProject.setTotalBudgetB(totalBudgetB);
+        	       	
         	// Retrieve the selected project budgets data
         	List<Budget> BudgetsC = daoSnapshot.getBudgetsCByAnalyticalCode(projectCode);
         	request.setAttribute("budgetsC", BudgetsC);
@@ -95,6 +103,10 @@ public class DataController extends HttpServlet {
         		totalBudgetC = totalBudgetC + BudgetsC.get(i).getAmount();
         	}
         	request.setAttribute("totalBudgetC", totalBudgetC);
+        	
+        	selectedProject.setTotalBudgetC(totalBudgetC);
+        	
+        	daoSnapshot.addProject(selectedProject);
     	    
     	    forward =  "/ProjectsDetails.jsp";
         }
@@ -128,7 +140,9 @@ public class DataController extends HttpServlet {
                                         	
                 User user =  daoUser.getUserByUserLogin(request.getParameter("userlogin"));
                                 
-                if (myUser.getUserPwd().equals(user.getUserPwd())) { 	
+                if (myUser.getUserPwd().equals(user.getUserPwd())) {
+                	String userlogin = request.getParameter("userlogin");
+                	request.setAttribute("user", userlogin);
                 	forward = SUCCESS;	
                 } else {
                 	forward = ERROR;
@@ -160,7 +174,9 @@ public class DataController extends HttpServlet {
         } else if (action.equalsIgnoreCase("getProjects")){ //--------------------------------------- Get Projects List      	
         	
         	List<Project> projectsList = daoSnapshot.getProjects();
+        	String user =  request.getParameter("data");
         	forward =  "/Home.jsp";
+        	request.setAttribute("username", user);
     	    request.setAttribute("projects", projectsList);   
     	    
         } else if (action.equalsIgnoreCase("getProject")){ //---------------------------------------- Get selected project

@@ -5,15 +5,15 @@
 <head>
 <meta charset="utf-8">
 <title>CIRB - Project Allocations</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link href="css/Spacelab_bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <div class="row">
-      <div class="span3">
-      	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a>
-      </div>
-      <div class="span9">
+<!--       <div class="span3"> -->
+<!--       	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a> -->
+<!--       </div> -->
+      <div class="span12">
         <h2>Projects Allocations Management</h2>
       </div>
     </div>
@@ -42,9 +42,10 @@
     </div>
 </div>
 <div class="container">  
+    	<br></br>
   <div class="row">
     <div class="span12">
-      <table class="table table-bordered table-striped table-condensed">
+      <table class="table table-striped table-hover ">
         <thead>
           <tr>
             <th>First Name</th>
@@ -67,7 +68,7 @@
         </tbody>
       </table>
     </div>
-  </div>   
+    </div> 
 </div>    
 
 <script type='text/javascript'>

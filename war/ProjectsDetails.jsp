@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <title>CIRB - Project Allocations</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link href="css/Spacelab_bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -70,6 +70,10 @@
         <tbody>
       </table>
     </div>
+    <div class="span6">
+    	<div class="alert alert-success" role="alert"><c:out value="Total Budget C : ${selectedproject.totalBudgetC} EUR" /></div>
+    	<div class="alert alert-danger" role="alert"><c:out value="Total Budget B : ${selectedproject.totalBudgetB} EUR" /></div>
+    </div>
   </div>   
 </div>   
 
@@ -94,12 +98,6 @@
             </c:forEach>
         </tbody>
       </table>
-      <table class="table table-bordered table-striped table-condensed">
-      	<tr>
-      		<td><b>Budget Total (Engagement)</b></td>
-      		<td align="right"><b><c:out value="${totalBudgetC}"/></b></td>
-      	</tr>
-      </table>
     </div>
     <div class="span6">
       <table class="table table-bordered table-striped table-condensed">
@@ -119,12 +117,6 @@
                 </tr>
             </c:forEach>
         </tbody>
-      </table>
-      <table class="table table-bordered table-striped table-condensed">
-      	<tr>
-      		<td><b>Budget Total (Liquidation)</b></td>
-      		<td align="right"><b><c:out value="${totalBudgetB}"/></b></td>
-      	</tr>
       </table>
     </div>
   </div>   

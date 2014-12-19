@@ -2,162 +2,132 @@ package com.jdp.model;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 
 
 @Entity
+@Index
 public class SnapshotData {
 	
 	@Id
 	Long id;
 	
-    private String ProjectCA;
-    private String ProjectDescription;
-    private String ProjectDirector;
-    private String ProjectManager;
-    private String ProjectYear;
-    private String DocumentType;
-    private String SupplierName;
-    private String SupplierReference;
-    private String DocumentNb;
-    private String DocumentDate;
-    private String DocumentDescription;
-    private String DocumentYear;
-    private double DocumentAmount;
+    private String projectCA;
+    private String projectDescription;
+    private String projectDirector;
+    private String projectManager;
+    @Unindex private double reviewedBudgetC;
+    @Unindex private double realizedBudgetC;
+    @Unindex private double availableBudgetC;
+    @Unindex private double reviewedBudgetB;
+    @Unindex private double realizedBudgetB;
+    @Unindex private double availableBudgetB;
     
 	public SnapshotData() {
-		ProjectCA = "";
-		ProjectDescription = "";
-		ProjectDirector = "";
-		ProjectManager = "";
-		ProjectYear = "";
-		DocumentType = "";
-		SupplierName = "";
-		SupplierReference = "";
-		DocumentNb = "";
-		DocumentDate = "";
-		DocumentDescription = "";
-		DocumentYear = "";
-		DocumentAmount = 0.00;
+		projectCA = "";
+		projectDescription = "";
+		projectDirector = "";
+		projectManager = "";
+		reviewedBudgetC = 0.00;
+		realizedBudgetC = 0.00;
+		availableBudgetC = 0.00;
+		reviewedBudgetB = 0.00;
+		realizedBudgetB = 0.00;
+		availableBudgetB = 0.00;
 	}
 
 	public SnapshotData(String ProjectCA,
 			String ProjectDescription,
 			String ProjectDirector,
 			String ProjectManager,
-			String ProjectYear,
-		    String DocumentType,
-		    String SupplierName,
-		    String SupplierReference,
-		    String DocumentNb,
-		    String DocumentDate,
-		    String DocumentDescription,
-		    String DocumentYear,
-		    double DocumentAmount){
+		    double ReviewedBudgetC,
+		    double RealizedBudgetC,
+		    double AvailableBudgetC,
+		    double ReviewedBudgetB,
+		    double RealizedBudgetB,
+		    double AvailableBudgetB){
 	
-		this.ProjectCA = ProjectCA;
-		this.ProjectDescription = ProjectDescription;
-		this.ProjectDirector = ProjectDirector;
-		this.ProjectManager = ProjectManager;
-		this.ProjectYear = ProjectYear;
-		this.DocumentType = DocumentType;
-		this.SupplierName = SupplierName;
-		this.SupplierReference = SupplierReference;
-		this.DocumentNb = DocumentNb;
-		this.DocumentDate = DocumentDate;
-		this.DocumentDescription = DocumentDescription;
-		this.DocumentYear = DocumentYear;
-		this.DocumentAmount = DocumentAmount;
+		this.projectCA = ProjectCA;
+		this.projectDescription = ProjectDescription;
+		this.projectDirector = ProjectDirector;
+		this.projectManager = ProjectManager;
+		this.reviewedBudgetC = ReviewedBudgetC;
+		this.realizedBudgetC = RealizedBudgetC;
+		this.availableBudgetC = AvailableBudgetC;
+		this.reviewedBudgetB = ReviewedBudgetB;
+		this.realizedBudgetB = RealizedBudgetB;
+		this.availableBudgetB = AvailableBudgetB;		
 	}
 	
     public String getProjectCA() {
-        return ProjectCA;
+        return projectCA;
     }
     public void setProjectCA(String ProjectCA) {
-        this.ProjectCA = ProjectCA;
+        this.projectCA = ProjectCA;
     }
     
     public String getProjectDescription() {
-        return ProjectDescription;
+        return projectDescription;
     }
     public void setProjectDescription(String ProjectDescription) {
-        this.ProjectDescription = ProjectDescription;
+        this.projectDescription = ProjectDescription;
     }
 	
     public String getProjectDirector() {
-        return ProjectDirector;
+        return projectDirector;
     }
     public void setProjectDirector(String ProjectDirector) {
-        this.ProjectDirector = ProjectDirector;
+        this.projectDirector = ProjectDirector;
     }
     
     public String getProjectManager() {
-        return ProjectManager;
+        return projectManager;
     }
     public void setProjectManager(String ProjectManager) {
-        this.ProjectManager = ProjectManager;
+        this.projectManager = ProjectManager;
     }
-    
-    public String getProjectYear() {
-        return ProjectYear;
+       
+    public double getReviewedBudgetC() {
+        return reviewedBudgetC;
     }
-    public void setProjectYear(String ProjectYear) {
-        this.ProjectYear = ProjectYear;
-    }
-    
-    public String getDocumentType() {
-        return DocumentType;
-    }
-    public void setDocumentType(String DocumentType) {
-        this.DocumentType = DocumentType;
-    } 
-    
-    public String getSupplierName() {
-        return SupplierName;
-    }
-    public void setSupplierName(String SupplierName) {
-        this.SupplierName = SupplierName;
-    } 
-    
-    public String getSupplierReference() {
-        return SupplierReference;
-    }
-    public void setSupplierReference(String SupplierReference) {
-        this.SupplierReference = SupplierReference;
-    }
-    
-    public String getDocumentNb() {
-        return DocumentNb;
-    }
-    public void setDocumentNb(String DocumentNb) {
-        this.DocumentNb = DocumentNb;
-    }
-    
-    public String getDocumentDate() {
-        return DocumentDate;
-    }
-    public void setDocumentDate(String DocumentDate) {
-        this.DocumentDate = DocumentDate;
-    }
-    
-    public String getDocumentDescription() {
-        return DocumentDescription;
-    }
-    public void setDocumentDescription(String DocumentDescription) {
-        this.DocumentDescription = DocumentDescription;
-    }
-    
-    public String getDocumentYear() {
-        return DocumentYear;
-    }
-    public void setDocumentYear(String DocumentYear) {
-        this.DocumentYear = DocumentYear;
-    }
-    
-    public double getDocumentAmount() {
-        return DocumentAmount;
-    }
-    public void setDocumentAmount(double DocumentAmount) {
-        this.DocumentAmount = DocumentAmount;
+    public void setReviewedBudgetC(double Amount) {
+        this.reviewedBudgetC = Amount;
     }
 
+    public double getRealizedBudgetC() {
+        return realizedBudgetC;
+    }
+    public void setRealizedBudgetC(double Amount) {
+        this.realizedBudgetC = Amount;
+    }
+
+    public double getAvailableBudgetC() {
+        return availableBudgetC;
+    }
+    public void setAvailableBudgetC(double Amount) {
+        this.availableBudgetC = Amount;
+    }
+    
+    public double getReviewedBudgetB() {
+        return reviewedBudgetB;
+    }
+    public void setReviewedBudgetB(double Amount) {
+        this.reviewedBudgetB = Amount;
+    }
+
+    public double getRealizedBudgetB() {
+        return realizedBudgetB;
+    }
+    public void setRealizedBudgetB(double Amount) {
+        this.realizedBudgetB = Amount;
+    }
+
+    public double getAvailableBudgetB() {
+        return availableBudgetB;
+    }
+    public void setAvailableBudgetB(double Amount) {
+        this.availableBudgetB = Amount;
+    }
+    
 }

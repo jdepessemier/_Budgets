@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <title>CIRB - Project Allocations</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link href="css/Spacelab_bootstrap.min.css" rel="stylesheet">
 </head>
 	<body>
 		<div class="container">

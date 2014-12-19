@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <title>CIRB - Project Allocations</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link href="css/Spacelab_bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -20,32 +20,39 @@
     <div class="row">
     	<div class="tabbable"> 
     		<ul class="nav nav-tabs">
-      			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Users Management <b class="caret"></b> </a>
+      			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> User Management <b class="caret"></b> </a>
         			<ul class="dropdown-menu">
-        			    <li class="dropdown"><a href='#' onclick='invokeServlet("DataController?action=listUsers")' data-toggle="tab">Users</a></li>
+        			    <li onclick="location.href='Registration.jsp';"><a data-toggle="tab">Créer Utilisateur</a></li>
         			</ul>
       			</li>	
+      			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Projets <b class="caret"></b> </a>
+        			<ul class="dropdown-menu">
+    					<c:forEach items="${projects}" var="project">
+    					    <li class="dropdown" ><a id="test" value="${project.analyticalCode}" href='#' onclick='invokeServlet("getProject","${project.analyticalCode}")' data-toggle="tab"><c:out value="${project.description}" /></a></li>
+    					</c:forEach>
+        			</ul>	
+      			</li>        		
       			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Administration <b class="caret"></b> </a>
         			<ul class="dropdown-menu">
           				<li onclick="location.href='SnapshotUpload.jsp';"><a data-toggle="tab">Upload Snapshot Data</a></li>
         			</ul>
       			</li>      			
-      			<li onclick="location.href='Registration.jsp';"><a data-toggle="tab">Register Users</a></li>
     		</ul>
 		</div>  
     </div>
-</div> 
+</div>
 <div class="container">  
   <div class="row">
     <div class="span12">
       <table class="table table-bordered table-striped table-condensed">
         <thead>
           <tr>
-            <th>Project</th>
+            <th>Analytical Code</th>
             <th>Description</th>
             <th>Director</th>
             <th>Manager</th>
-            <th>Year</th>
+            <th>Budget C</th>
+            <th>Budget B</th>
           </tr>
         </thead>
         <tbody>
@@ -55,7 +62,8 @@
                 	<td><c:out value="${project.description}" /></td>
                 	<td><c:out value="${project.director}" /></td>
                 	<td><c:out value="${project.manager}" /></td>
-                	<td><c:out value="${project.year}" /></td>
+                	<td><c:out value="${project.totalBudgetC} EUR" /></td>
+                	<td><c:out value="${project.totalBudgetB} EUR" /></td>
                 </tr>
             </c:forEach>
         </tbody>
@@ -65,9 +73,9 @@
 </div>    
 
 <script type='text/javascript'>
-function invokeServlet(URL)
+function invokeServlet(value1,value2)
 {
-   location.href = URL;
+	    location.href = "DataController?action="+value1+"&data="+value2;
 }
 
 </script>
