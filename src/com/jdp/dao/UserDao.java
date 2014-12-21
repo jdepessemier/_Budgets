@@ -36,15 +36,22 @@ public class UserDao {
 		if (myUser == null) {
 			
 			User user = new User();
+			
             user.setFirstName("---------");
             user.setLastName("---------");
             user.setUserMail("---------");
             user.setUserLogin("---------");
             user.setUserPwd("---------");
+            user.setDepartment("---------");
+            user.setService("---------");
+            user.setRole("---------");
             
             return user;
+            
 		}  else {
+			
 			return myUser;
+		
 		}
     }
     

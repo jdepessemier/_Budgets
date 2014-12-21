@@ -141,8 +141,7 @@ public class DataController extends HttpServlet {
                 User user =  daoUser.getUserByUserLogin(request.getParameter("userlogin"));
                                 
                 if (myUser.getUserPwd().equals(user.getUserPwd())) {
-                	String userlogin = request.getParameter("userlogin");
-                	request.setAttribute("user", userlogin);
+                	request.setAttribute("role", user.getRole());
                 	forward = SUCCESS;	
                 } else {
                 	forward = ERROR;
@@ -157,6 +156,9 @@ public class DataController extends HttpServlet {
             user.setUserMail(request.getParameter("usermail"));
             user.setUserLogin(request.getParameter("userlogin"));
             user.setUserPwd(request.getParameter("userpwd"));
+            user.setDepartment(request.getParameter("department"));
+            user.setService(request.getParameter("service"));
+            user.setRole(request.getParameter("role"));
             
             daoUser.addUser(user);
             

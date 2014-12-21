@@ -13,6 +13,9 @@ public class User {
     @Unindex private String userMail;
     private String userLogin;
     private String userPwd;
+    @Unindex private String department;
+    @Unindex private String service;
+    @Unindex private String role;
     
 	public User() {
 		firstName = "";
@@ -20,19 +23,28 @@ public class User {
 		userMail = "";
 	    userLogin = "";
 		userPwd = "";
+		department = "";
+		service = "";
+		role = "";
 	}
 
 	public User(String firstname,
 				String lastname,
 				String usermail,
 				String userlogin,
-				String userpwd) {
+				String userpwd,
+				String department,
+				String service,
+				String role) {
 		
 		this.firstName = firstname;
 		this.lastName = lastname;
 		this.userMail = usermail;
 		this.userLogin = userlogin;
 		this.userPwd = userpwd;
+		this.department = department;
+		this.service = service;
+		this.role = role;
 	}
        
     public String getFirstName() {
@@ -69,11 +81,26 @@ public class User {
     public void setUserPwd(String userpwd) {
         this.userPwd = userpwd;
     }
+      
+    public String getDepartment() {
+        return department;
+    }
+    public void setDepartment(String department) {
+        this.department = department;
+    }
     
-    @Override
-    public String toString() {
-        return "User [firstName=" + firstName
-                + ", lastName=" + lastName + ", username=" + userLogin + ", usermail="
-                + userMail + "]";
-    }    
+    public String getService() {
+        return service;
+    }
+    public void setService(String service) {
+        this.service = service;
+    }
+    
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
 }
