@@ -9,7 +9,7 @@
 	  <title>Projects Allocations</title>
 	
 	  <!-- Bootstrap -->
-	  <link href="css/Spacelab_bootstrap.min.css" rel="stylesheet">
+	  <link href="css/bootstrap.min.css" rel="stylesheet">
 	
 	  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,9 +27,8 @@
 		    	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a>
 		    </div>
 		    <div class="col-lg-8">
-		    	<blockquote>
 		    	 	<h2>PROJECTS ALLOCATIONS MANAGEMENT</h2>
-				</blockquote> 
+		    	 	<hr>
 		    </div>
 		  </div>
 		</div>
