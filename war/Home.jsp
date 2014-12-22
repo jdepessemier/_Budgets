@@ -1,24 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE HTML>
-<html>
-<head>
-<meta charset="utf-8">
-<title>CIRB - Project Allocations</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
-</head>
-<body>
-<div class="container">
-    <div class="row">
-      <div class="span3">
-          <a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a>
-      </div>
-      <div class="span9">
-        <h2>Projects Allocations Management</h2>
-      </div>
-    </div>
-    <div class="row">
-        <div class="tabbable"> 
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -28,7 +9,7 @@
       <title>Projects Allocations</title>
     
       <!-- Bootstrap -->
-      <link href="css/Spacelab_bootstrap.min.css" rel="stylesheet">
+      <link href="css/bootstrap.css" rel="stylesheet">
     
       <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
       <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -101,3 +82,12 @@
 
 <script type='text/javascript'>
 function invokeServlet(value1,value2)
+{
+	    location.href = "DataController?action="+value1+"&data="+value2;
+}
+
+</script>
+<script src="js/jquery.js"></script> 
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
