@@ -22,9 +22,19 @@ public class UserDao {
 
     public List<User> getAllUsers() {
     	
-    	List<User> users =  ofy().load().type(User.class).list();
+    	List<User> users =  ofy().load().type(User.class).order("userLogin").list();
     	
         return users;
+    }
+    
+    public void deleteUserByUserLogin(String userlogin) {
+    	
+    	List<User> myUsers = ofy().load().type(User.class).filter("userLogin =", userlogin).list();
+    	
+    	User myUser = myUsers.get(0);
+    	
+    	ofy().delete().entity(myUser).now();
+    	
     }
     
     public User getUserByUserLogin(String userlogin) {

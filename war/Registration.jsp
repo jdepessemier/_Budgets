@@ -103,6 +103,7 @@
 					      	<div class="input-group input-group-sm">
 					      		<span class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></span>      					
       								<select class="form-control" id="select" name="service">
+      								  <option>--</option>
 								      	<option>IS</option>
 								      	<option>WAP</option>
 						        	</select>

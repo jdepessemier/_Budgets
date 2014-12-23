@@ -69,6 +69,16 @@ public class DataController extends HttpServlet {
     	    forward =  "/ListUsers.jsp";
     	    request.setAttribute("users", usersList);   
         
+        } else if (action.equalsIgnoreCase("deleteUser")){ //---------------------------------------- Delete User
+        	
+        	String userToDelete = request.getParameter("data");
+        	daoUser.deleteUserByUserLogin(userToDelete);
+        	
+        	List<User> usersList = daoUser.getAllUsers();
+    	    request.setAttribute("users", usersList); 
+    	    forward =  "/ListUsers.jsp";
+        	
+        
         } else if (action.equalsIgnoreCase("getProject")){ //---------------------------------------- Get selected Project
         	
         	// Get the list of projects for the dropdown list
@@ -167,19 +177,18 @@ public class DataController extends HttpServlet {
         } else if (action.equalsIgnoreCase("listUsers")){ //----------------------------------------- List Users
         	
         	List<Project> projectsList = daoSnapshot.getProjects();
-        	request.setAttribute("project", projectsList);
-        	    	
-        	List<User> usersList = daoUser.getAllUsers();        
-    	    forward =  "/ListUsers.jsp";
+        	request.setAttribute("project", projectsList);    	    	
+        	List<User> usersList = daoUser.getAllUsers();           	    
     	    request.setAttribute("users", usersList);
+    	    forward =  "/ListUsers.jsp";
     	    
-        } else if (action.equalsIgnoreCase("getProjects")){ //--------------------------------------- Get Projects List      	
+        } else if (action.equalsIgnoreCase("getHomePageData")){ //--------------------------------------- Get Data for Home Page      	
         	
         	List<Project> projectsList = daoSnapshot.getProjects();
-        	String user =  request.getParameter("data");
-        	forward =  "/Home.jsp";
-        	request.setAttribute("username", user);
+        	String role =  request.getParameter("data");
+        	request.setAttribute("role", role);
     	    request.setAttribute("projects", projectsList);   
+    	    forward =  "/Home.jsp";
     	    
         } else if (action.equalsIgnoreCase("getProject")){ //---------------------------------------- Get selected project
         	      	
