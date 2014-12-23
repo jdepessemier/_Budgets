@@ -19,7 +19,25 @@ public class UserDao {
 
     	ObjectifyService.ofy().save().entity(user).now();
     }
-
+    
+    public void updateUser(User user) {
+    	
+    	List<User> myUsers = ofy().load().type(User.class).filter("userLogin =", user.getUserLogin()).list();
+    	
+    	User myUser = myUsers.get(0);
+    	
+    	myUser.setFirstName(user.getFirstName());
+    	myUser.setLastName(user.getLastName());
+    	myUser.setUserMail(user.getUserMail());
+    	myUser.setUserLogin(user.getUserLogin());
+    	myUser.setUserPwd(user.getUserPwd());
+    	myUser.setDepartment(user.getDepartment());
+    	myUser.setService(user.getService());
+    	myUser.setRole(user.getRole());
+    	
+    	ObjectifyService.ofy().save().entity(myUser).now();
+    }
+    
     public List<User> getAllUsers() {
     	
     	List<User> users =  ofy().load().type(User.class).order("userLogin").list();

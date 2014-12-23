@@ -95,8 +95,16 @@
                 	<td><c:out value="${user.department}" /></td>
                 	<td><c:out value="${user.service}" /></td>
                 	<td><c:out value="${user.role}" /></td>
-                	<td><a><span class="glyphicon glyphicon-edit"></span></a></td>
-                	<td><a id="delete" value="${user.userLogin}" href='#' onclick='invokeServlet("deleteUser","${user.userLogin}")'><span class="glyphicon glyphicon-trash"></span></a></td>
+                	<td><a id="edit" value="${user.userLogin}" href='#' 
+                	                 onclick='invokeServlet("editUser","${user.userLogin}")'>
+                	                 <span class="glyphicon glyphicon-edit"></span>
+                	    </a>
+                	</td>
+                	<td><a id="delete" value="${user.userLogin}" href='#' 
+                	                   onclick='invokeServlet("deleteUser","${user.userLogin}")'>
+                	                   <span class="glyphicon glyphicon-trash"></span>
+                	    </a>
+                	</td>
                 </tr>
             </c:forEach>
         </tbody>

@@ -68,7 +68,15 @@ public class DataController extends HttpServlet {
         	List<User> usersList = daoUser.getAllUsers();
     	    forward =  "/ListUsers.jsp";
     	    request.setAttribute("users", usersList);   
+        } else if (action.equalsIgnoreCase("editUser")){ //---------------------------------------- Edit User
+   
+        	String userToEdit = request.getParameter("data");
+        	User myUser = daoUser.getUserByUserLogin(userToEdit);
+        	request.setAttribute("user", myUser);
+        	forward =  "/EditUser.jsp";
+       
         
+        	
         } else if (action.equalsIgnoreCase("deleteUser")){ //---------------------------------------- Delete User
         	
         	String userToDelete = request.getParameter("data");
@@ -157,7 +165,25 @@ public class DataController extends HttpServlet {
                 	forward = ERROR;
                 }          		
             }
-        
+        } else if (action.equalsIgnoreCase("updateUser")){ //---------------------------------------- Update User
+        	
+        	User user = new User();
+            
+            user.setLastName(request.getParameter("lastname"));
+            user.setFirstName(request.getParameter("firstname"));
+            user.setUserMail(request.getParameter("usermail"));
+            user.setUserLogin(request.getParameter("userlogin"));
+            user.setUserPwd(request.getParameter("userpwd"));
+            user.setDepartment(request.getParameter("department"));
+            user.setService(request.getParameter("service"));
+            user.setRole(request.getParameter("role"));
+            
+            daoUser.updateUser(user);
+            
+            List<User> usersList = daoUser.getAllUsers();
+    	    request.setAttribute("users", usersList); 
+    	    forward =  "/ListUsers.jsp";
+    	    
         } else if (action.equalsIgnoreCase("register")){ //------------------------------------------ Register User        	
         	User user = new User();
             
