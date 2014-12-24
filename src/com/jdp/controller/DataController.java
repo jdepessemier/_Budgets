@@ -165,24 +165,30 @@ public class DataController extends HttpServlet {
                 	forward = ERROR;
                 }          		
             }
-        } else if (action.equalsIgnoreCase("updateUser")){ //---------------------------------------- Update User
+        } else if (action.equalsIgnoreCase("cancelUpdateUser")){ //---------------------------------- Cancel Update User 
         	
-        	User user = new User();
-            
-            user.setLastName(request.getParameter("lastname"));
-            user.setFirstName(request.getParameter("firstname"));
-            user.setUserMail(request.getParameter("usermail"));
-            user.setUserLogin(request.getParameter("userlogin"));
-            user.setUserPwd(request.getParameter("userpwd"));
-            user.setDepartment(request.getParameter("department"));
-            user.setService(request.getParameter("service"));
-            user.setRole(request.getParameter("role"));
-            
-            daoUser.updateUser(user);
-            
             List<User> usersList = daoUser.getAllUsers();
     	    request.setAttribute("users", usersList); 
     	    forward =  "/ListUsers.jsp";
+            
+        } else if (action.equalsIgnoreCase("updateUser")){ //---------------------------------------- Update User
+        	       		
+            	User user = new User();
+                
+                user.setLastName(request.getParameter("lastname"));
+                user.setFirstName(request.getParameter("firstname"));
+                user.setUserMail(request.getParameter("usermail"));
+                user.setUserLogin(request.getParameter("userlogin"));
+                user.setUserPwd(request.getParameter("userpwd"));
+                user.setDepartment(request.getParameter("department"));
+                user.setService(request.getParameter("service"));
+                user.setRole(request.getParameter("role"));
+                
+                daoUser.updateUser(user);
+                
+                List<User> usersList = daoUser.getAllUsers();
+        	    request.setAttribute("users", usersList); 
+        	    forward =  "/ListUsers.jsp";
     	    
         } else if (action.equalsIgnoreCase("register")){ //------------------------------------------ Register User        	
         	User user = new User();
