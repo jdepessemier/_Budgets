@@ -42,7 +42,7 @@ public class FileUploadHandler extends HttpServlet {
 		String forward="";
         String action = request.getParameter("action");
         
-        if (action.equalsIgnoreCase("uploadSnaphotData")){ //------------------------------------------------
+        if (action.equalsIgnoreCase("uploadDirectorsReportData")){ //------------------------------------------------
         	
         	ServletFileUpload upload = new ServletFileUpload();
         	

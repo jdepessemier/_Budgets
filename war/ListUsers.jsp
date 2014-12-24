@@ -35,6 +35,7 @@
 	
   <div class="container">
   	<ul class="nav nav-tabs">
+  	  <li onclick="location.href='Home.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-home"></span> Home</a></li>              
       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Project Management <b class="caret"></b> </a>
       	<ul class="dropdown-menu">
           <li class="dropdown"><a href='#' onclick='invokeServlet("listProjects","")' data-toggle="tab">Projects List</a></li>
