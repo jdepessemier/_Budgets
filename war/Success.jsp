@@ -6,19 +6,7 @@
 <title>Registered</title>
 </head>
 <body>
-<%
-	Cookie firstName = new Cookie("first_name",request.getParameter("user.firstName"));
-	Cookie lastName = new Cookie("last_name",request.getParameter("user.lastName"));
-	Cookie role = new Cookie("role",request.getParameter("user.role"));
-	
-	firstName.setMaxAge(60*60*24);
-	lastName.setMaxAge(60*60*24);
-	role.setMaxAge(60*60*24);
-	
-	response.addCookie(firstName);
-	response.addCookie(lastName);
-	response.addCookie(role);
-%>
-<jsp:forward page="/DataController?action=getHomePageData&data=${user.role}" />
+<%-- <jsp:forward page="/DataController?action=getHomePageData&data=${user.role}" /> --%>
+<jsp:forward page="/DataController?action=getHomePageData" />
 </body>
 </html>

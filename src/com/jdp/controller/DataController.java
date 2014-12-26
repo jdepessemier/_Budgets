@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -159,9 +160,21 @@ public class DataController extends HttpServlet {
                 User user =  daoUser.getUserByUserLogin(request.getParameter("userlogin"));
                                 
                 if (myUser.getUserPwd().equals(user.getUserPwd())) {
-                	request.setAttribute("user", user);
-//                	request.setAttribute("role", user.getRole());
+                	                 	
+                	Cookie firstName = new Cookie("first_name",user.getFirstName());
+                	Cookie lastName = new Cookie("last_name",user.getLastName());
+                	Cookie user_role = new Cookie("user_role",user.getRole());
+                	
+                	firstName.setMaxAge(60*60*24);
+                	lastName.setMaxAge(60*60*24);
+                	user_role.setMaxAge(60*60*24);
+                	
+                	response.addCookie(firstName);
+                	response.addCookie(lastName);
+                	response.addCookie(user_role);                	  	
+                 	
                 	forward = SUCCESS;	
+                	
                 } else {
                 	forward = ERROR;
                 }          		
@@ -218,8 +231,6 @@ public class DataController extends HttpServlet {
         } else if (action.equalsIgnoreCase("getHomePageData")){ //----------------------------------- Get Data for Home Page      	
         	
         	List<Project> projectsList = daoSnapshot.getProjects();
-        	String role =  request.getParameter("data");
-        	request.setAttribute("role", role);
     	    request.setAttribute("projects", projectsList);   
     	    forward =  "/Home.jsp";
     	    
