@@ -14,10 +14,7 @@
   <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-	
-    </script> 
-    <style type="text/css">
-      @import "../datatables/media/css/demo_table.css";</style> 
+	 
     <script> 
       $(document).ready(function(){ 
         $('#the_table').dataTable(); 
