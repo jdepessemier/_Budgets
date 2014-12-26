@@ -1,66 +1,98 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>CIRB - Project Allocations</title>
-<link href="css/Spacelab_bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects Allocations</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon" href="ico/favicon.ico">
+
 </head>
 <body>
-<div class="container">
-    <div class="row">
-<!--       <div class="span3"> -->
-<!--       	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a> -->
-<!--       </div> -->
-      <div class="span9">
-        <h2>Projects Allocations Management</h2>
-      </div>
-    </div>
-    <div class="row">
-    	<div class="tabbable"> 
-    		<ul class="nav nav-tabs">
-      			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> User Management <b class="caret"></b> </a>
-        			<ul class="dropdown-menu">
-        			    <li class="dropdown"><a href='#' onclick='invokeServlet("listUsers","")' data-toggle="tab">Liste des Utilisateurs</a></li>
-        			    <li onclick="location.href='Registration.jsp';"><a data-toggle="tab">Créer Utilisateur</a></li>
-        			</ul>
-      			</li>	
-      			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Projets <b class="caret"></b> </a>
-        			<ul class="dropdown-menu">
-    					<c:forEach items="${projects}" var="project">
-    					    <li class="dropdown" ><a id="test" value="${project.analyticalCode}" href='#' onclick='invokeServlet("getProject","${project.analyticalCode}")' data-toggle="tab"><c:out value="${project.description}" /></a></li>
-    					</c:forEach>
-        			</ul>	
-      			</li>        		
-      			<li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Administration <b class="caret"></b> </a>
-        			<ul class="dropdown-menu">
-          				<li onclick="location.href='SnapshotUpload.jsp';"><a data-toggle="tab">Upload Snapshot Data</a></li>
-        			</ul>
-      			</li>      			
-    		</ul>
-		</div>  
-    </div>
-</div> 
+<%
+   Cookie cookie = null;
+   Cookie[] cookies = null;
+   cookies = request.getCookies();
+   if( cookies != null) {
+      for (int i = 0; i < cookies.length; i++){
+         cookie = cookies[i];
+         if (cookie.getName().equals("last_name")) {
+        	 String currentlastname = cookie.getValue();
+        	 request.setAttribute("lastName", currentlastname);
+         }
+         if (cookie.getName().equals("first_name")) {
+        	 String currentfirstname = cookie.getValue();
+        	 request.setAttribute("firstName", currentfirstname);
+         }
+         if (cookie.getName().equals("user_role")) {
+        	 String currentrole = cookie.getValue();
+        	 request.setAttribute("role", currentrole);
+         }
+     }
+   }
+
+%>
+
+	<div class="container">
+	  <br>
+	  <div class="row">
+	    <div class="col-lg-4">
+	    	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a>
+	    </div>
+	    <div class="col-lg-8">
+	    	 	<h3>PROJECTS ALLOCATIONS MANAGEMENT</h3>
+	    	  <p class="text-info"><span class="glyphicon glyphicon-user"></span>
+	    	  	&nbsp;<c:out value="${firstName}"/> <c:out value="${lastName}"/>
+	    	  	&nbsp;&nbsp;<a href='#' onclick='invokeServlet("logout","")'>
+	    	  	<span class="glyphicon glyphicon-log-out"></span></a></p>
+	    	 	<hr>
+	    </div>
+	  </div>
+	</div>
+	
+	  <div class="container">
+  	<ul class="nav nav-tabs">
+  	  <li onclick="location.href='Home.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-home"></span> Home</a></li>              
+    </ul>
+  </div>
+	
+	
 <div class="container">
   <div class="row">
-	<div class="span4 offset4">
-		<h3> Choose File :</h3>
-			<form class="well" id="formulaire" method="POST" action='upload?action=uploadSnaphot' enctype="multipart/form-data">
+	<div class="col-md-8 col-md-offset-2">
+		<h3> Upload Missions Situation Data File :</h3>
+			<form class="well" id="formulaire" method="POST" action='upload?action=uploadMissionsSituationtData' enctype="multipart/form-data">
             	<p><input class="span3" type="file" name="file" /></p>
-                <button type="submit" class="btn btn-primary btn-small pull-right"> <i class="icon-file icon-white"></i> Upload Snapshot Data</button>
+                <button type="submit" class="btn btn-primary btn-small pull-right"><span class="glyphicon glyphicon-cloud-upload"></span> Upload Data</button>
             </form>          
     </div>
   </div>
 </div>
 
 <script type='text/javascript'>
-function invokeServlet(value1,value2)
-{
-	    location.href = "DataController?action="+value1+"&data="+value2;
+function invokeServlet(value1,value2){
+	location.href = "DataController?action="+value1+"&data="+value2;
 }
 </script>
-<script src="js/jquery.js"></script> 
-<script src="js/bootstrap.min.js"></script>   
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -176,10 +176,8 @@ public class DataController extends HttpServlet {
                 	response.addCookie(firstName);
                 	response.addCookie(lastName);
                 	response.addCookie(user_role);                	  	
-                 	
-                	List<Project> projectsList = daoSnapshot.getProjects();
-            	    request.setAttribute("projects", projectsList);   
-            	    forward =  "/Home.jsp";	
+                 	 
+            	    forward =  SUCCESS;	
                 	
                 } else {
                 	forward = ERROR;

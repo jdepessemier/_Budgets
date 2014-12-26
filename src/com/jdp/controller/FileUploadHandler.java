@@ -153,7 +153,7 @@ public class FileUploadHandler extends HttpServlet {
     		}        	   		
         }      
         
-        if (action.equalsIgnoreCase("uploadSnaphot")){ //-------------------------------------------------
+        if (action.equalsIgnoreCase("uploadMissionsSituationData")){ //-------------------------------------------------
         	
         	ServletFileUpload upload = new ServletFileUpload();
         	
