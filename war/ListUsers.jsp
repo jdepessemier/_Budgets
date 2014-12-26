@@ -9,7 +9,20 @@
   <title>Projects Allocations</title>
 
   <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
+  <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+	
+    </script> 
+    <style type="text/css">
+      @import "../datatables/media/css/demo_table.css";</style> 
+    <script> 
+      $(document).ready(function(){ 
+        $('#the_table').dataTable(); 
+      }); 
+    </script>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,7 +33,7 @@
   
   <!-- Le fav and touch icons -->
   <link rel="shortcut icon" href="ico/favicon.ico">
-
+   
 </head>
 <body>
 
@@ -78,7 +91,7 @@
 <div class="container">  
     	<br></br>
   <div class="row">
-      <table class="table table-condensed table-striped table-hover ">
+      <table id="the_table" class="table table-condensed table-striped table-hover ">
         <thead>
           <tr>
             <th>First Name</th>
@@ -88,6 +101,8 @@
             <th>Department</th>
             <th>Service</th>
             <th>Role</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -122,11 +137,6 @@ function invokeServlet(value1,value2){
 	location.href = "DataController?action="+value1+"&data="+value2;
 }
 </script>
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
 
 </body>
 </html>
