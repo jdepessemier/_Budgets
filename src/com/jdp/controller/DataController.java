@@ -159,7 +159,8 @@ public class DataController extends HttpServlet {
                 User user =  daoUser.getUserByUserLogin(request.getParameter("userlogin"));
                                 
                 if (myUser.getUserPwd().equals(user.getUserPwd())) {
-                	request.setAttribute("role", user.getRole());
+                	request.setAttribute("user", user);
+//                	request.setAttribute("role", user.getRole());
                 	forward = SUCCESS;	
                 } else {
                 	forward = ERROR;
@@ -214,7 +215,7 @@ public class DataController extends HttpServlet {
     	    request.setAttribute("users", usersList);
     	    forward =  "/ListUsers.jsp";
     	    
-        } else if (action.equalsIgnoreCase("getHomePageData")){ //--------------------------------------- Get Data for Home Page      	
+        } else if (action.equalsIgnoreCase("getHomePageData")){ //----------------------------------- Get Data for Home Page      	
         	
         	List<Project> projectsList = daoSnapshot.getProjects();
         	String role =  request.getParameter("data");
