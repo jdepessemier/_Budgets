@@ -65,49 +65,18 @@
 	    </div>
 	    <div class="col-lg-8">
 	    	 	<h3>PROJECTS ALLOCATIONS MANAGEMENT</h3>
-	    	 	<p class="text-info">Welcome <c:out value="${firstName}"/> <c:out value="${lastName}" /> !</p>
+	    	  <p class="text-info"><span class="glyphicon glyphicon-user"></span>
+	    	  	&nbsp;<c:out value="${firstName}"/> <c:out value="${lastName}"/>
+	    	  	&nbsp;&nbsp;<a href='#' onclick='invokeServlet("logout","")'>
+	    	  	<span class="glyphicon glyphicon-log-out"></span></a></p>
 	    	 	<hr>
 	    </div>
 	  </div>
 	</div>
 	
-  <div class="container">
+	<div class="container">
   	<ul class="nav nav-tabs">
-  	  <li onclick="location.href='Home.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-  	  <li class="dropdown"><a href='#' onclick='invokeServlet("projectsStatus","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Projects Summary</a></li>
-          
-<!--       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Project Management <b class="caret"></b> </a> -->
-<!--       	<ul class="dropdown-menu"> -->
-<!--           <li class="dropdown"><a href='#' onclick='invokeServlet("listProjects","")' data-toggle="tab">Projects List</a></li> -->
-<!--           <li class="dropdown"><a href='#' onclick='invokeServlet("projectsStatus","")' data-toggle="tab">Projects Status</a></li> -->
-<!--         </ul> -->
-<!--       </li>                       -->
-<!--       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Projets <b class="caret"></b> </a> -->
-<!--       	<ul class="dropdown-menu"> -->
-<%--         	<c:forEach items="${projects}" var="project"> --%>
-<%--           	<li class="dropdown" ><a id="test" value="${project.analyticalCode}" href='#' onclick='invokeServlet("getProject","${project.analyticalCode}")' data-toggle="tab"><c:out value="${project.description}" /></a></li> --%>
-<%--           </c:forEach> --%>
-<!--         </ul>     -->
-<!--       </li>  -->
-      
-      <c:choose>
-      	<c:when test="${role=='Administrator'}">
-        	<c:set var="visibility" scope="application" value="active"/>
-        </c:when>
-        <c:otherwise>
-        	<c:set var="visibility" scope="application" value="disabled"/>
-        </c:otherwise>
-      </c:choose>                 
-      
-      <li class="${visibility}" class="dropdown"> <a class="${visibility}" class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-wrench"></span> Administration <b class="caret"></b> </a>
-      	<ul  class="dropdown-menu">
-        	<li onclick="location.href='Registration.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Register User</a></li>
-          <li class="dropdown"><a href='#' onclick='invokeServlet("listUsers","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> List Users</a></li>
-          <li class="divider"></li>
-          <li onclick="location.href='DirectorsReportUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Directors Report</a></li>
-          <li onclick="location.href='MissionsSituationUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Missions Situation</a></li>
-        </ul>
-      </li>                  
+  	  <li onclick="location.href='Home.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-home"></span> Home</a></li>              
     </ul>
   </div> 
 

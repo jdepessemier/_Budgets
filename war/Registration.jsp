@@ -24,6 +24,29 @@
 </head>
 <body>
 
+<%
+   Cookie cookie = null;
+   Cookie[] cookies = null;
+   cookies = request.getCookies();
+   if( cookies != null) {
+      for (int i = 0; i < cookies.length; i++){
+         cookie = cookies[i];
+         if (cookie.getName().equals("last_name")) {
+        	 String currentlastname = cookie.getValue();
+        	 request.setAttribute("lastName", currentlastname);
+         }
+         if (cookie.getName().equals("first_name")) {
+        	 String currentfirstname = cookie.getValue();
+        	 request.setAttribute("firstName", currentfirstname);
+         }
+         if (cookie.getName().equals("user_role")) {
+        	 String currentrole = cookie.getValue();
+        	 request.setAttribute("role", currentrole);
+         }
+     }
+   }
+%>
+
 	<div class="container">
 	  <br>
 	  <div class="row">
@@ -32,6 +55,10 @@
 	    </div>
 	    <div class="col-lg-8">
 	    	 	<h3>PROJECTS ALLOCATIONS MANAGEMENT</h3>
+	    	  <p class="text-info"><span class="glyphicon glyphicon-user"></span>
+	    	  	&nbsp;<c:out value="${firstName}"/> <c:out value="${lastName}"/>
+	    	  	&nbsp;&nbsp;<a href='#' onclick='invokeServlet("logout","")'>
+	    	  	<span class="glyphicon glyphicon-log-out"></span></a></p>
 	    	 	<hr>
 	    </div>
 	  </div>

@@ -44,6 +44,7 @@
          }
      }
    }
+
 %>
 
 	<div class="container">
@@ -54,7 +55,10 @@
 	    </div>
 	    <div class="col-lg-8">
 	    	 	<h3>PROJECTS ALLOCATIONS MANAGEMENT</h3>
-	    	 	<p class="text-info">Welcome <c:out value="${firstName}"/> <c:out value="${lastName}" /> !</p>
+	    	  <p class="text-info"><span class="glyphicon glyphicon-user"></span>
+	    	  	&nbsp;<c:out value="${firstName}"/> <c:out value="${lastName}"/>
+	    	  	&nbsp;&nbsp;<a href='#' onclick='invokeServlet("logout","")'>
+	    	  	<span class="glyphicon glyphicon-log-out"></span></a></p>
 	    	 	<hr>
 	    </div>
 	  </div>

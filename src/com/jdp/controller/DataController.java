@@ -42,6 +42,10 @@ public class DataController extends HttpServlet {
         	List<Project> projectsList = daoSnapshot.getProjects();
     	    request.setAttribute("projects", projectsList);       	
     	    forward =  "/ListProjects.jsp";
+        
+        } else if (action.equalsIgnoreCase("logout")) {
+        	
+        	forward = "/Logout.jsp";
     	    
         } else if (action.equalsIgnoreCase("projectsStatus")) {
         	
@@ -173,7 +177,9 @@ public class DataController extends HttpServlet {
                 	response.addCookie(lastName);
                 	response.addCookie(user_role);                	  	
                  	
-                	forward = SUCCESS;	
+                	List<Project> projectsList = daoSnapshot.getProjects();
+            	    request.setAttribute("projects", projectsList);   
+            	    forward =  "/Home.jsp";	
                 	
                 } else {
                 	forward = ERROR;
