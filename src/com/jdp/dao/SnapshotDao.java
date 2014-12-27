@@ -80,7 +80,7 @@ public class SnapshotDao {
         return budgetsC;
     }
 
-    public Budget getBudgetByUniqueId(String id) {
+    public Budget getBudgetByUniqueId(int id) {
 		
 		List<Budget> myBudgets = ofy().load().type(Budget.class)
 				.filter("uniqueId =", id).list();
@@ -126,7 +126,7 @@ public class SnapshotDao {
         return POs;
     }
  
-    public PurchaseOrder getPOByUniqueId(String id) {
+    public PurchaseOrder getPOByUniqueId(int id) {
     	
     	List<PurchaseOrder> myPOs = ofy().load().type(PurchaseOrder.class)
     			.filter("uniqueId =", id).list();
@@ -174,7 +174,7 @@ public class SnapshotDao {
         return Bills;
     }   
     
-    public Bill getBillByUniqueId(String id) {
+    public Bill getBillByUniqueId(int id) {
 		
 		List<Bill> myBills = ofy().load().type(Bill.class).filter("uniqueId =", id).list();
 		

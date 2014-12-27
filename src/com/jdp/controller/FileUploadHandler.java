@@ -153,7 +153,7 @@ public class FileUploadHandler extends HttpServlet {
     		}        	   		
         }      
         
-        if (action.equalsIgnoreCase("uploadMissionsSituationData")){ //-------------------------------------------------
+        if (action.equalsIgnoreCase("uploadMissionsSituationtData")){ //-------------------------------------------------
         	
         	ServletFileUpload upload = new ServletFileUpload();
         	
@@ -227,7 +227,8 @@ public class FileUploadHandler extends HttpServlet {
     	                
     	                String AmountToString = new Double(DocAmount).toString();
     	                
-    	                String DocUniqueId = ProjectCode.concat(DocType).concat(DocumentNb).concat(AmountToString);
+    	                String DocId = ProjectCode.concat(DocType).concat(DocumentNb).concat(AmountToString);
+    	                int DocUniqueId = DocId.hashCode();
     	                
     	                if (!ProjectCode.equals(currentProject)) { // a new project analytical code has been detected
     	                	

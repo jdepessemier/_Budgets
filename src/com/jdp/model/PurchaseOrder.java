@@ -13,7 +13,7 @@ public class PurchaseOrder {
 	@Id
 	Long id;
 	
-	private String uniqueId;
+	private int uniqueId;
     private String analyticalCode;
     private String poNb;
     @Unindex private String supplier;
@@ -24,7 +24,7 @@ public class PurchaseOrder {
 	@Unindex private double amount;
     
 	public PurchaseOrder() {
-		uniqueId = "";
+		uniqueId = 0;
 		analyticalCode = "";
 		poNb = "";
 		supplier = "";
@@ -35,7 +35,7 @@ public class PurchaseOrder {
 		amount = 0.00;
 	}
 
-	public PurchaseOrder(String uniqueId,
+	public PurchaseOrder(int uniqueId,
 			String analyticalCode,
 		    String poNb,
 		    String supplier,
@@ -56,10 +56,10 @@ public class PurchaseOrder {
 		this.amount = amount;
 	}
 	
-    public String getUniqueId() {
+    public int getUniqueId() {
         return uniqueId;
     }
-    public void setUniqueId(String uniqueId) {
+    public void setUniqueId(int uniqueId) {
         this.uniqueId = uniqueId;
     }
 	

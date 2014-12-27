@@ -12,7 +12,7 @@ public class Bill {
 	@Id
 	Long id;
 	
-	private String uniqueId;
+	private int uniqueId;
     private String analyticalCode;
     private String poNb;
     private String billNb;
@@ -24,7 +24,7 @@ public class Bill {
     @Unindex private double amount;
     
 	public Bill() {
-		uniqueId = "";
+		uniqueId = 0;
 		analyticalCode = "";
 		poNb = "";
 		billNb = "";
@@ -36,7 +36,7 @@ public class Bill {
 		amount = 0.00;
 	}
 
-	public Bill(String uniqueId,
+	public Bill(int uniqueId,
 			String analyticalCode,
 		    String poNb,
 		    String billNb,
@@ -59,10 +59,10 @@ public class Bill {
 		this.amount = amount;
 	}
 	
-    public String getUniqueId() {
+    public int getUniqueId() {
         return uniqueId;
     }
-    public void setUniqueId(String uniqueId) {
+    public void setUniqueId(int uniqueId) {
         this.uniqueId = uniqueId;
     }
     

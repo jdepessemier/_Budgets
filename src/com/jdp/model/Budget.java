@@ -12,7 +12,7 @@ public class Budget {
 	@Id
 	Long id;
 	
-	private String uniqueId;
+	private int uniqueId;
     private String analyticalCode;
     private String documentType;
 	private String documentNb;
@@ -22,7 +22,7 @@ public class Budget {
 	@Unindex private double amount;
     
 	public Budget() {
-		uniqueId = "";
+		uniqueId = 0;
 		analyticalCode = "";
 		documentType = "";
 		documentNb = "";
@@ -32,7 +32,7 @@ public class Budget {
 		amount = 0.00;
 	}
 
-	public Budget(String uniqueId,
+	public Budget(int uniqueId,
 			String analyticalCode,
 		    String documentType,
 		    String documentNb,
@@ -51,10 +51,10 @@ public class Budget {
 		this.amount = amount;
 	}
 	
-    public String getUniqueId() {
+    public int getUniqueId() {
         return uniqueId;
     }
-    public void setUniqueId(String uniqueId) {
+    public void setUniqueId(int uniqueId) {
         this.uniqueId = uniqueId;
     }
     	

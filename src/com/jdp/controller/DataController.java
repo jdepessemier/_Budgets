@@ -131,7 +131,7 @@ public class DataController extends HttpServlet {
         	
         	daoSnapshot.addProject(selectedProject);
     	    
-    	    forward =  "/ProjectsDetails.jsp";
+    	    forward =  "/ProjectDetails.jsp";
         }
         else {	
             forward = ERROR;
