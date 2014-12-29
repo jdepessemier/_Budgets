@@ -68,76 +68,90 @@ public class FileUploadHandler extends HttpServlet {
     	                ProjectCode = StringUtil.trimLeft(ProjectCode);
     	                ProjectCode = StringUtil.trimRight(ProjectCode);
     	                
-    	                String ProjectDesc = itemList.get(1).toUpperCase();
-    	                ProjectDesc = StringUtil.trimLeft(ProjectDesc);
-    	                ProjectDesc = StringUtil.trimRight(ProjectDesc);
+    	                ActiveProject activeProject = checkActiveProject(ProjectCode);
     	                
-    	                String ProjectDirector = itemList.get(2).toUpperCase();
-    	                ProjectDirector = StringUtil.trimLeft(ProjectDirector);
-    	                ProjectDirector = StringUtil.trimRight(ProjectDirector);
-
-    	                String ProjectManager = itemList.get(3).toUpperCase();
-    	                ProjectManager = StringUtil.trimLeft(ProjectManager);
-    	                ProjectManager = StringUtil.trimRight(ProjectManager);
-    	                
-    	                double reviewedBudgetCAmount = 0.00;
-    	                String readAmount = itemList.get(4);
-    	                if (!readAmount.isEmpty()){
-    	                	reviewedBudgetCAmount = round(Double.valueOf(itemList.get(4).replace(",", ".")),2);
-    	                } 
-    	                
-    	                double realizeddBudgetCAmount = 0.00;       
-    	                readAmount = itemList.get(5);
-    	                if (!readAmount.isEmpty()){
-    	                	realizeddBudgetCAmount = round(Double.valueOf(itemList.get(5).replace(",", ".")),2);
-    	                }
- 
-    	                double availableBudgetCAmount = 0.00;	                	
-    	                readAmount = itemList.get(6);
-    	                if (!readAmount.isEmpty()){
-    	                	availableBudgetCAmount = round(Double.valueOf(itemList.get(6).replace(",", ".")),2);    	                } else {
-    	                }
- 
-    	                double reviewedBudgetBAmount = 0.00;
-    	                readAmount = itemList.get(7);
-    	                if (!readAmount.isEmpty()){
-    	                	reviewedBudgetBAmount = round(Double.valueOf(itemList.get(7).replace(",", ".")),2);
-    	                }
-    	                
-    	                double realizedBudgetBAmount = 0.00;
-    	                readAmount = itemList.get(8);
-    	                if (!readAmount.isEmpty()){
-    	                	realizedBudgetBAmount = round(Double.valueOf(itemList.get(8).replace(",", ".")),2);
-    	                }
- 
-    	                double availableBudgetBAmount = 0.00;
-    	                readAmount = itemList.get(9);
-    	                if (!readAmount.isEmpty()){
-    	                	availableBudgetBAmount = round(Double.valueOf(itemList.get(9).replace(",", ".")),2);
-    	                }     	                
-    	                
-    	                if (!ProjectCode.equals(currentProject)) { // a new project analytical code has been detected
+    	                if (activeProject.getActive()) {
     	                	
-    	                	SnapshotData savedSnapshotData = dao.getSnapshotDataByAnalyticalCode(ProjectCode);
+//        	                String ProjectDesc = itemList.get(1).toUpperCase();
+//        	                ProjectDesc = StringUtil.trimLeft(ProjectDesc);
+//        	                ProjectDesc = StringUtil.trimRight(ProjectDesc);
+
+        	                String ProjectDesc = activeProject.getDescription();
+        	                
+//        	                String ProjectDirector = itemList.get(2).toUpperCase();
+//        	                ProjectDirector = StringUtil.trimLeft(ProjectDirector);
+//        	                ProjectDirector = StringUtil.trimRight(ProjectDirector);
+
+        	                String ProjectDirector = activeProject.getDirector();
+        	                
+//        	                String ProjectManager = itemList.get(3).toUpperCase();
+//        	                ProjectManager = StringUtil.trimLeft(ProjectManager);
+//        	                ProjectManager = StringUtil.trimRight(ProjectManager);
+        	                
+        	                String ProjectManager = activeProject.getManager();
+        	                
+        	                double reviewedBudgetCAmount = 0.00;
+        	                String readAmount = itemList.get(4);
+        	                if (!readAmount.isEmpty()){
+        	                	reviewedBudgetCAmount = round(Double.valueOf(itemList.get(4).replace(",", ".")),2);
+        	                } 
+        	                
+        	                double realizeddBudgetCAmount = 0.00;       
+        	                readAmount = itemList.get(5);
+        	                if (!readAmount.isEmpty()){
+        	                	realizeddBudgetCAmount = round(Double.valueOf(itemList.get(5).replace(",", ".")),2);
+        	                }
+     
+        	                double availableBudgetCAmount = 0.00;	                	
+        	                readAmount = itemList.get(6);
+        	                if (!readAmount.isEmpty()){
+        	                	availableBudgetCAmount = round(Double.valueOf(itemList.get(6).replace(",", ".")),2);    	                } else {
+        	                }
+     
+        	                double reviewedBudgetBAmount = 0.00;
+        	                readAmount = itemList.get(7);
+        	                if (!readAmount.isEmpty()){
+        	                	reviewedBudgetBAmount = round(Double.valueOf(itemList.get(7).replace(",", ".")),2);
+        	                }
+        	                
+        	                double realizedBudgetBAmount = 0.00;
+        	                readAmount = itemList.get(8);
+        	                if (!readAmount.isEmpty()){
+        	                	realizedBudgetBAmount = round(Double.valueOf(itemList.get(8).replace(",", ".")),2);
+        	                }
+     
+        	                double availableBudgetBAmount = 0.00;
+        	                readAmount = itemList.get(9);
+        	                if (!readAmount.isEmpty()){
+        	                	availableBudgetBAmount = round(Double.valueOf(itemList.get(9).replace(",", ".")),2);
+        	                }     	                
+        	                
+        	                if (!ProjectCode.equals(currentProject)) { // a new project analytical code has been detected
+        	                	
+        	                	SnapshotData savedSnapshotData = dao.getSnapshotDataByAnalyticalCode(ProjectCode);
+        	                	
+        	                	if (savedSnapshotData == null) { // the project does not exist in the database
+        	                		
+        	                		SnapshotData newSnapshotData = new SnapshotData(ProjectCode,
+    		 									ProjectDesc,
+    		 									ProjectDirector,
+    		 									ProjectManager,
+    		 									reviewedBudgetCAmount,
+    		 									realizeddBudgetCAmount,
+    		 									availableBudgetCAmount,
+    		 									reviewedBudgetBAmount,
+    		 									realizedBudgetBAmount,
+    		 									availableBudgetBAmount);
+
+        	                		dao.addSnapshotData(newSnapshotData);
+
+        	                	}   	        	                	
+        	                }
+        	                
+        	                currentProject = ProjectCode;
     	                	
-    	                	if (savedSnapshotData == null) { // the project does not exist in the database
-    	                		
-    	                		SnapshotData newSnapshotData = new SnapshotData(ProjectCode,
-		 									ProjectDesc,
-		 									ProjectDirector,
-		 									ProjectManager,
-		 									reviewedBudgetCAmount,
-		 									realizeddBudgetCAmount,
-		 									availableBudgetCAmount,
-		 									reviewedBudgetBAmount,
-		 									realizedBudgetBAmount,
-		 									availableBudgetBAmount);
-
-    	                		dao.addSnapshotData(newSnapshotData);
-
-    	                	}   	
-    	                	currentProject = ProjectCode;
     	                }
+    	                
     	            }
     	            
     	        } finally {
@@ -350,7 +364,134 @@ public class FileUploadHandler extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}  
-	}
+	}	
+	
+	   private ActiveProject checkActiveProject(String analyticalcode) {
+		   
+		   ActiveProject activeProject = new ActiveProject();
+		   activeProject.setDirector("N. Jelinski");
+		   
+		   switch (analyticalcode) {
+		   
+           case "41220490": 
+        	   activeProject.setDescription("BOS");
+           	   activeProject.setManager("T. Nguyen");
+           	   activeProject.setActive(true);
+           	   break;
+           case "41220010": 
+        	   activeProject.setDescription("BOS Rollout");
+			   activeProject.setManager("T. Nguyen");
+			   activeProject.setActive(true);
+			   break;
+           case "41300530": 
+        	   activeProject.setDescription("Chancellerie 4.0");
+			   activeProject.setManager("T. Nguyen");
+			   activeProject.setActive(true);
+			   break;   
+           case "41220400": 
+        	   activeProject.setDescription("FixMyStreet 3.0");
+			   activeProject.setManager("L. Afif");
+			   activeProject.setActive(true);
+			   break;				
+           case "41400380": 
+        	   activeProject.setDescription("FixMyStreet 4.0");
+			   activeProject.setManager("L. Afif");
+			   activeProject.setActive(true);
+			   break;			
+           case "41400740": 
+        	   activeProject.setDescription("GeoPortail 2.0");
+			   activeProject.setManager("L. Afif");
+			   activeProject.setActive(true);
+			   break;
+           case "41110120": 
+        	   activeProject.setDescription("GIS - GeoPortail 1.0");
+			   activeProject.setManager("G. Charlot");
+			   activeProject.setActive(true);
+			   break;
+           case "41400250": 
+        	   activeProject.setDescription("IRISbox");
+			   activeProject.setManager("F. Monaco");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41400520": 
+        	   activeProject.setDescription("ISR");
+			   activeProject.setManager("D. Le Grelle");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41400750": 
+        	   activeProject.setDescription("Migration be.brussels (PRB & CIRB)");
+			   activeProject.setManager("D. Butaye");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41400360": 
+        	   activeProject.setDescription("Rollout NOVA Bruxelles");
+			   activeProject.setManager("R. Himpe");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41220480": 
+        	   activeProject.setDescription("NOVA 4.x");
+			   activeProject.setManager("H. Dewyspelaere");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41220030": 
+        	   activeProject.setDescription("NOVA 5.0");
+			   activeProject.setManager("H. Dewyspelaere");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41400260": 
+        	   activeProject.setDescription("Photos Obliques");
+			   activeProject.setManager("E. Auquière");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41400400": 
+        	   activeProject.setDescription("Portail Régional");
+			   activeProject.setManager("F. Monaco");
+			   activeProject.setActive(true);
+			   break;			
+           case "41300440": 
+        	   activeProject.setDescription("SEO");
+			   activeProject.setManager("L. Afif");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41300000": 
+        	   activeProject.setDescription("SHARE CPAS 4.0");
+			   activeProject.setManager("R. Himpe");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41400600": 
+        	   activeProject.setDescription("SHARE CPAS 5.0");
+			   activeProject.setManager("R. Himpe");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41220170": 
+        	   activeProject.setDescription("Support Testing");
+			   activeProject.setManager("J. De Pessemier");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41400180": 
+        	   activeProject.setDescription("Support Tools");
+			   activeProject.setManager("N. Jelinski");
+			   activeProject.setActive(true);
+			   break;
+           case "41220370": 
+        	   activeProject.setDescription("UrbIS-aaS 3.0");
+			   activeProject.setManager("V. Streignard");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41220390": 
+        	   activeProject.setDescription("Web Services UrbIS 1.0");
+			   activeProject.setManager("G. Charlot");
+			   activeProject.setActive(true);
+			   break;			   
+           default: activeProject.setDescription("");
+					activeProject.setDirector("");
+					activeProject.setManager("");
+					activeProject.setActive(false);
+                    break;
+		   }		   
+		   
+		   return activeProject;
+	   }
 	
 	   private List<String> getItemsOfLine(String line, int nbOfItems ) {
 		   	
