@@ -1,6 +1,8 @@
 package com.jdp.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -112,8 +114,9 @@ public class DataController extends HttpServlet {
         	for (int i = 0; i < BudgetsB.size(); i++) {
         		totalBudgetB = totalBudgetB + BudgetsB.get(i).getAmount();
         	}
-        	request.setAttribute("totalBudgetB", totalBudgetB);
         	
+        	totalBudgetB = round(totalBudgetB,2);
+        	request.setAttribute("totalBudgetB", totalBudgetB);       	
         	selectedProject.setTotalBudgetB(totalBudgetB);
         	       	
         	// Retrieve the selected project budgets data
@@ -125,8 +128,9 @@ public class DataController extends HttpServlet {
         	for (int i = 0; i < BudgetsC.size(); i++) {
         		totalBudgetC = totalBudgetC + BudgetsC.get(i).getAmount();
         	}
-        	request.setAttribute("totalBudgetC", totalBudgetC);
         	
+        	totalBudgetC = round(totalBudgetC,2);
+        	request.setAttribute("totalBudgetC", totalBudgetC);
         	selectedProject.setTotalBudgetC(totalBudgetC);
         	
         	daoSnapshot.addProject(selectedProject);
@@ -267,5 +271,12 @@ public class DataController extends HttpServlet {
        
     	RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
+    }
+     
+     
+     public static double round(double value, int places) {
+    	    BigDecimal bd = new BigDecimal(value);
+    	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+    	    return bd.doubleValue();
     }
 }

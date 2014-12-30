@@ -59,7 +59,7 @@ public class FileUploadHandler extends HttpServlet {
     	            String line;
     	            
     	            String currentProject = "";
-
+    	            
     	            while ((line = bufferedReader.readLine()).charAt(0) != ';') {
     	            	
     	            	List<String> itemList = getItemsOfLine(line,9);
@@ -72,22 +72,8 @@ public class FileUploadHandler extends HttpServlet {
     	                
     	                if (activeProject.getActive()) {
     	                	
-//        	                String ProjectDesc = itemList.get(1).toUpperCase();
-//        	                ProjectDesc = StringUtil.trimLeft(ProjectDesc);
-//        	                ProjectDesc = StringUtil.trimRight(ProjectDesc);
-
-        	                String ProjectDesc = activeProject.getDescription();
-        	                
-//        	                String ProjectDirector = itemList.get(2).toUpperCase();
-//        	                ProjectDirector = StringUtil.trimLeft(ProjectDirector);
-//        	                ProjectDirector = StringUtil.trimRight(ProjectDirector);
-
+        	                String ProjectDesc = activeProject.getDescription();      	                
         	                String ProjectDirector = activeProject.getDirector();
-        	                
-//        	                String ProjectManager = itemList.get(3).toUpperCase();
-//        	                ProjectManager = StringUtil.trimLeft(ProjectManager);
-//        	                ProjectManager = StringUtil.trimRight(ProjectManager);
-        	                
         	                String ProjectManager = activeProject.getManager();
         	                
         	                double reviewedBudgetCAmount = 0.00;
@@ -96,10 +82,10 @@ public class FileUploadHandler extends HttpServlet {
         	                	reviewedBudgetCAmount = round(Double.valueOf(itemList.get(4).replace(",", ".")),2);
         	                } 
         	                
-        	                double realizeddBudgetCAmount = 0.00;       
+        	                double realizedBudgetCAmount = 0.00;       
         	                readAmount = itemList.get(5);
         	                if (!readAmount.isEmpty()){
-        	                	realizeddBudgetCAmount = round(Double.valueOf(itemList.get(5).replace(",", ".")),2);
+        	                	realizedBudgetCAmount = round(Double.valueOf(itemList.get(5).replace(",", ".")),2);
         	                }
      
         	                double availableBudgetCAmount = 0.00;	                	
@@ -130,22 +116,36 @@ public class FileUploadHandler extends HttpServlet {
         	                	
         	                	SnapshotData savedSnapshotData = dao.getSnapshotDataByAnalyticalCode(ProjectCode);
         	                	
-        	                	if (savedSnapshotData == null) { // the project does not exist in the database
+        	                	if (savedSnapshotData == null) { // the project does not exist in the database, then we create a new entry
         	                		
         	                		SnapshotData newSnapshotData = new SnapshotData(ProjectCode,
     		 									ProjectDesc,
     		 									ProjectDirector,
     		 									ProjectManager,
     		 									reviewedBudgetCAmount,
-    		 									realizeddBudgetCAmount,
+    		 									realizedBudgetCAmount,
     		 									availableBudgetCAmount,
     		 									reviewedBudgetBAmount,
     		 									realizedBudgetBAmount,
     		 									availableBudgetBAmount);
 
         	                		dao.addSnapshotData(newSnapshotData);
-
-        	                	}   	        	                	
+        	                		
+        	                	} else { // the project already exist in the database, then we do an update of the data
+        	                		
+        	                		savedSnapshotData.setProjectDescription(ProjectDesc);
+        	                		savedSnapshotData.setProjectDirector(ProjectDirector);
+        	                		savedSnapshotData.setProjectManager(ProjectManager);
+        	                		savedSnapshotData.setReviewedBudgetC(reviewedBudgetCAmount);
+        	                		savedSnapshotData.setRealizedBudgetC(realizedBudgetCAmount);
+        	                		savedSnapshotData.setAvailableBudgetC(availableBudgetCAmount);
+        	                		savedSnapshotData.setReviewedBudgetB(reviewedBudgetBAmount);
+        	                		savedSnapshotData.setRealizedBudgetB(realizedBudgetBAmount);
+        	                		savedSnapshotData.setAvailableBudgetB(availableBudgetBAmount);
+           		
+        	                		dao.addSnapshotData(savedSnapshotData);
+        	                		
+        	                	}
         	                }
         	                
         	                currentProject = ProjectCode;
@@ -193,156 +193,219 @@ public class FileUploadHandler extends HttpServlet {
     	                ProjectCode = StringUtil.trimLeft(ProjectCode);
     	                ProjectCode = StringUtil.trimRight(ProjectCode);
     	                
-    	                String ProjectDesc = itemList.get(1).toUpperCase();
-    	                ProjectDesc = StringUtil.trimLeft(ProjectDesc);
-    	                ProjectDesc = StringUtil.trimRight(ProjectDesc);
+    	                ActiveProject activeProject = checkActiveProject(ProjectCode);
     	                
-    	                String ProjectDirector = itemList.get(2).toUpperCase();
-    	                ProjectDirector = StringUtil.trimLeft(ProjectDirector);
-    	                ProjectDirector = StringUtil.trimRight(ProjectDirector);
-
-    	                String ProjectManager = itemList.get(3).toUpperCase();
-    	                ProjectManager = StringUtil.trimLeft(ProjectManager);
-    	                ProjectManager = StringUtil.trimRight(ProjectManager);    	                
-    	                
-    	                String ProjectYear = itemList.get(4);
-    	                ProjectYear = StringUtil.trimLeft(ProjectYear);
-    	                ProjectYear = StringUtil.trimRight(ProjectYear);
-    	                   	                
-    	                String DocType = itemList.get(11).toUpperCase();
-    	                DocType = StringUtil.trimLeft(DocType);
-    	                DocType = StringUtil.trimRight(DocType);
-    	                
-    	                String Supplier = itemList.get(12);
-    	                Supplier = StringUtil.trimLeft(Supplier);
-    	                Supplier = StringUtil.trimRight(Supplier);
-    	                
-    	                String SupplierRef = itemList.get(13);
-    	                SupplierRef = StringUtil.trimLeft(SupplierRef);
-    	                SupplierRef = StringUtil.trimRight(SupplierRef);
-    	                
-    	                String DocumentNb = itemList.get(14);
-    	                DocumentNb = StringUtil.trimLeft(DocumentNb);
-    	                DocumentNb = StringUtil.trimRight(DocumentNb);
-    	                
-    	                String DocDate = itemList.get(15);
-    	                DocDate = StringUtil.trimLeft(DocDate);
-    	                DocDate = StringUtil.trimRight(DocDate);
-    	                
-    	                String DocComment = itemList.get(16);
-    	                DocComment = StringUtil.trimLeft(DocComment);
-    	                DocComment = StringUtil.trimRight(DocComment);  
-    	                
-    	                String DocYear = itemList.get(17).toUpperCase();
-    	                DocYear = StringUtil.trimLeft(DocYear);
-    	                DocYear = StringUtil.trimRight(DocYear);
-    	                    	                    	                
-    	                double DocAmount = round(Double.valueOf(itemList.get(18).replace(",", ".")),2);
-    	                
-    	                String AmountToString = new Double(DocAmount).toString();
-    	                
-    	                String DocId = ProjectCode.concat(DocType).concat(DocumentNb).concat(AmountToString);
-    	                int DocUniqueId = DocId.hashCode();
-    	                
-    	                if (!ProjectCode.equals(currentProject)) { // a new project analytical code has been detected
+    	                if (activeProject.getActive()) {
     	                	
-    	                	Project savedProject = dao.getProjectByAnalyticalCode(ProjectCode);
+        	                String ProjectDesc = activeProject.getDescription();      	                
+        	                String ProjectDirector = activeProject.getDirector();
+        	                String ProjectManager = activeProject.getManager();
+        	                
+        	                String ProjectYear = itemList.get(4);
+        	                ProjectYear = StringUtil.trimLeft(ProjectYear);
+        	                ProjectYear = StringUtil.trimRight(ProjectYear);
+        	                   	                
+        	                String DocType = itemList.get(11).toUpperCase();
+        	                DocType = StringUtil.trimLeft(DocType);
+        	                DocType = StringUtil.trimRight(DocType);
+        	                
+        	                String Supplier = itemList.get(12);
+        	                Supplier = StringUtil.trimLeft(Supplier);
+        	                Supplier = StringUtil.trimRight(Supplier);
+        	                
+        	                String SupplierRef = itemList.get(13);
+        	                SupplierRef = StringUtil.trimLeft(SupplierRef);
+        	                SupplierRef = StringUtil.trimRight(SupplierRef);
+        	                
+        	                String DocumentNb = itemList.get(14);
+        	                DocumentNb = StringUtil.trimLeft(DocumentNb);
+        	                DocumentNb = StringUtil.trimRight(DocumentNb);
+        	                
+        	                String DocDate = itemList.get(15);
+        	                DocDate = StringUtil.trimLeft(DocDate);
+        	                DocDate = StringUtil.trimRight(DocDate);
+        	                
+        	                String DocComment = itemList.get(16);
+        	                DocComment = StringUtil.trimLeft(DocComment);
+        	                DocComment = StringUtil.trimRight(DocComment);  
+        	                
+        	                String DocYear = itemList.get(17).toUpperCase();
+        	                DocYear = StringUtil.trimLeft(DocYear);
+        	                DocYear = StringUtil.trimRight(DocYear);
+        	                    	                    	                
+        	                double DocAmount = round(Double.valueOf(itemList.get(18).replace(",", ".")),2);
+        	                
+        	                String AmountToString = new Double(DocAmount).toString();
+        	                
+        	                String DocId = ProjectCode.concat(DocType).concat(DocumentNb).concat(AmountToString);
+        	                int DocUniqueId = DocId.hashCode();
+        	                         
+        	                if (!ProjectCode.equals(currentProject)) { // a new project analytical code has been detected
+        	                	
+        	                	Project savedProject = dao.getProjectByAnalyticalCode(ProjectCode);
+        	                	
+        	                	if (savedProject == null) { // the project does not exist in the database
+        	                		
+        	                		Project newProject = new Project(ProjectCode,
+       								     							 ProjectDesc,
+       								     							 ProjectDirector,
+       								     							 ProjectManager,
+       								     							 ProjectYear,
+       								     							 0.00,
+       								     							 0.00,
+       								     							 0.00,
+       								     							 0.00);        	                		
+        	                	
+        	                		dao.addProject(newProject);       	                		
+        	                	
+        	                	} else { // the project exists in the database
+        	                		
+        	                		savedProject.setDescription(ProjectDesc);
+        	                		savedProject.setDirector(ProjectDirector);
+        	                		savedProject.setManager(ProjectManager);
+        	                		
+        	                		dao.addProject(savedProject);
+        	                		
+        	                	}
+        	                	currentProject = ProjectCode;
+        	                }
+        	                
+        	                if (DocType.equals("BUDGET B")) {
+        	                	
+        	                	Budget savedBudget = dao.getBudgetByUniqueId(DocUniqueId);
+        	                	
+        	                	if (savedBudget == null) { // the budget line reference does not exist in the database
+        	                		
+        	                		Budget newBudget = new Budget(DocUniqueId,
+        	                									  ProjectCode,
+        	                									  BUDGET_B,
+        	                									  DocumentNb,
+        	                									  DocDate,
+        	                									  DocComment,
+        	                									  DocYear,   	                									  
+        	                									  DocAmount);
+        	                		dao.addBudget(newBudget);
+        	                		
+        	                	} else {
+        	                		
+        	                		savedBudget.setAnalyticalCode(ProjectCode);
+        	                		savedBudget.setDocumentNb(DocumentNb);
+        	                		savedBudget.setDocumentDate(DocDate);
+        	                		savedBudget.setDocumentDescription(DocComment);
+        	                		savedBudget.setDocumentYear(DocYear);
+        	                		savedBudget.setAmount(DocAmount);
+        	                		
+        	                		dao.addBudget(savedBudget);
+        	                		
+        	                	}
+        	                }
     	                	
-    	                	if (savedProject == null) { // the project does not exist in the database
-    	                		
-    	                		Project newProject = new Project(ProjectCode,
-   								     							 ProjectDesc,
-   								     							 ProjectDirector,
-   								     							 ProjectManager,
-   								     							 ProjectYear,
-   								     							 0.00,
-   								     							 0.00,
-   								     							 0.00,
-   								     							 0.00);
-    	                		
-    	                		dao.addProject(newProject);	
-    	                	}
-    	                	currentProject = ProjectCode;
+        	                if (DocType.equals("BUDGET C")) {
+        	                	
+        	                	Budget savedBudget = dao.getBudgetByUniqueId(DocUniqueId);
+        	                	
+        	                	if (savedBudget == null) { // the budget line reference does not exist in the database
+        	                		
+        	                		Budget newBudget = new Budget(DocUniqueId,
+        	                									  ProjectCode,
+        	                									  BUDGET_C,
+        	                									  DocumentNb,
+        	                									  DocDate,
+        	                									  DocComment,
+        	                									  DocYear,   	                									  
+        	                									  DocAmount);
+        	                		dao.addBudget(newBudget);
+        	                	} else {
+        	                		
+        	                		savedBudget.setAnalyticalCode(ProjectCode);
+        	                		savedBudget.setDocumentNb(DocumentNb);
+        	                		savedBudget.setDocumentDate(DocDate);
+        	                		savedBudget.setDocumentDescription(DocComment);
+        	                		savedBudget.setDocumentYear(DocYear);
+        	                		savedBudget.setAmount(DocAmount);
+        	                		
+        	                		dao.addBudget(savedBudget);
+        	                		
+        	                	}
+        	                }
+        	                
+        	                if (DocType.equals("COMMANDES")) {
+        	                	
+        	                	PurchaseOrder savedPO = dao.getPOByUniqueId(DocUniqueId);
+        	                	
+        	                	if (savedPO == null) { // the purchase order line reference does not exist in the database
+        	                		
+        	                		String poNb = DocComment.substring(13, 21);
+        	                		
+        	                		PurchaseOrder newPO = new PurchaseOrder(DocUniqueId,
+        	                											    ProjectCode,
+        	                										        poNb,
+        	                										        Supplier,
+        	                										        DocumentNb,
+        	                										        DocDate,
+        	                										        DocComment,
+        	                										        DocYear,   	                									  
+        	                										        DocAmount);
+        	                		dao.addPO(newPO);
+        	                		
+        	                	} else {
+        	                		
+        	                		String poNb = DocComment.substring(13, 21);
+        	                		
+        	                		savedPO.setAnalyticalCode(ProjectCode);
+        	                		savedPO.setPoNb(poNb);
+        	                		savedPO.setSupplier(Supplier);
+        	                		savedPO.setDocumentNb(DocumentNb);
+        	                		savedPO.setDocumentDate(DocDate);
+        	                		savedPO.setDocumentDescription(DocComment);
+        	                		savedPO.setDocumentYear(DocYear);
+        	                		savedPO.setAmount(DocAmount);
+        	                		
+        	                		dao.addPO(savedPO);
+        	                		
+        	                	}
+        	                }
+        	                
+        	                if (DocType.equals("FACTURES")) {
+        	                	
+        	                	Bill savedBill = dao.getBillByUniqueId(DocUniqueId);
+        	                	
+        	                	if (savedBill == null) { // the bill reference does not exist in the database
+        	                		
+        	                		String poNb = DocComment.substring(2, 9);
+        	                		
+        	                		Bill newBill = new Bill(DocUniqueId,
+        	                								ProjectCode,
+        	                								poNb,
+        	                								SupplierRef,
+        	                								Supplier,
+        	                								DocumentNb,
+        	                								DocDate,
+        	                								DocComment,
+        	                								DocYear,   	                									  
+        	                								DocAmount);
+        	                		dao.addBill(newBill);
+        	                		
+        	                	}  else {
+        	                		
+        	                		String poNb = DocComment.substring(13, 21);
+        	                		
+        	                		savedBill.setAnalyticalCode(ProjectCode);
+        	                		savedBill.setPoNb(poNb);
+        	                		savedBill.setSupplier(Supplier);
+        	                		savedBill.setDocumentNb(DocumentNb);
+        	                		savedBill.setDocumentDate(DocDate);
+        	                		savedBill.setDocumentDescription(DocComment);
+        	                		savedBill.setDocumentYear(DocYear);
+        	                		savedBill.setAmount(DocAmount);
+        	                		
+        	                		dao.addBill(savedBill);
+        	                		
+        	                	}
+        	                }
+        	                
     	                }
     	                
-    	                if (DocType.equals("BUDGET B")) {
-    	                	
-    	                	Budget savedBudget = dao.getBudgetByUniqueId(DocUniqueId);
-    	                	
-    	                	if (savedBudget == null) { // the budget line reference does not exist in the database
-    	                		
-    	                		Budget newBudget = new Budget(DocUniqueId,
-    	                									  ProjectCode,
-    	                									  BUDGET_B,
-    	                									  DocumentNb,
-    	                									  DocDate,
-    	                									  DocComment,
-    	                									  DocYear,   	                									  
-    	                									  DocAmount);
-    	                		dao.addBudget(newBudget);
-    	                	}
-    	                }
- 
-    	                if (DocType.equals("BUDGET C")) {
-    	                	
-    	                	Budget savedBudget = dao.getBudgetByUniqueId(DocUniqueId);
-    	                	
-    	                	if (savedBudget == null) { // the budget line reference does not exist in the database
-    	                		
-    	                		Budget newBudget = new Budget(DocUniqueId,
-    	                									  ProjectCode,
-    	                									  BUDGET_C,
-    	                									  DocumentNb,
-    	                									  DocDate,
-    	                									  DocComment,
-    	                									  DocYear,   	                									  
-    	                									  DocAmount);
-    	                		dao.addBudget(newBudget);
-    	                	}
-    	                }
-    	                
-    	                if (DocType.equals("COMMANDES")) {
-    	                	
-    	                	PurchaseOrder savedPO = dao.getPOByUniqueId(DocUniqueId);
-    	                	
-    	                	if (savedPO == null) { // the purchase order line reference does not exist in the database
-    	                		
-    	                		String poNb = DocComment.substring(13, 21);
-    	                		
-    	                		PurchaseOrder newPO = new PurchaseOrder(DocUniqueId,
-    	                											    ProjectCode,
-    	                										        poNb,
-    	                										        Supplier,
-    	                										        DocumentNb,
-    	                										        DocDate,
-    	                										        DocComment,
-    	                										        DocYear,   	                									  
-    	                										        DocAmount);
-    	                		dao.addPO(newPO);
-    	                	}
-    	                }	                
-    	                
-    	                if (DocType.equals("FACTURES")) {
-    	                	
-    	                	Bill savedBill = dao.getBillByUniqueId(DocUniqueId);
-    	                	
-    	                	if (savedBill == null) { // the bill reference does not exist in the database
-    	                		
-    	                		String poNb = DocComment.substring(2, 9);
-    	                		
-    	                		Bill newBill = new Bill(DocUniqueId,
-    	                								ProjectCode,
-    	                								poNb,
-    	                								SupplierRef,
-    	                								Supplier,
-    	                								DocumentNb,
-    	                								DocDate,
-    	                								DocComment,
-    	                								DocYear,   	                									  
-    	                								DocAmount);
-    	                		dao.addBill(newBill);
-    	                	}
-    	                }  	                   		            
     	            }	               
 
     	        } finally {
