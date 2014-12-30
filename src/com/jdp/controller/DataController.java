@@ -105,7 +105,7 @@ public class DataController extends HttpServlet {
         	Project selectedProject = daoSnapshot.getProjectByAnalyticalCode(projectCode);
         	request.setAttribute("selectedproject", selectedProject);  
         	
-        	// Retrieve the selected project budgets data
+        	// Retrieve the selected project budgets data (Budgets B)
         	List<Budget> BudgetsB = daoSnapshot.getBudgetsBByAnalyticalCode(projectCode);
         	request.setAttribute("budgetsB", BudgetsB);
         	
@@ -118,8 +118,21 @@ public class DataController extends HttpServlet {
         	totalBudgetB = round(totalBudgetB,2);
         	request.setAttribute("totalBudgetB", totalBudgetB);       	
         	selectedProject.setTotalBudgetB(totalBudgetB);
-        	       	
-        	// Retrieve the selected project budgets data
+        	
+        	// Retrieve the list of Bills
+        	List<Bill> Bills = daoSnapshot.getBillByAnalyticalCode(projectCode);
+        	request.setAttribute("bills", Bills);
+        	
+        	double totalBills = 0.00;
+        	
+        	for (int i = 0; i < Bills.size(); i++) {
+        		totalBills = totalBills + Bills.get(i).getAmount();
+        	}
+        	
+        	totalBills = round(totalBills,2);
+        	request.setAttribute("totalbills", totalBills);
+        	      	
+        	// Retrieve the selected project budgets data (Budgets C)
         	List<Budget> BudgetsC = daoSnapshot.getBudgetsCByAnalyticalCode(projectCode);
         	request.setAttribute("budgetsC", BudgetsC);
         	
@@ -134,6 +147,19 @@ public class DataController extends HttpServlet {
         	selectedProject.setTotalBudgetC(totalBudgetC);
         	
         	daoSnapshot.addProject(selectedProject);
+        	
+        	// Retrieve the list of Purchase Orders
+        	List<PurchaseOrder> POs = daoSnapshot.getPOByAnalyticalCode(projectCode);
+        	request.setAttribute("purchasedorders", POs);
+        	
+        	double totalPurchased = 0.00;
+        	
+        	for (int i = 0; i < POs.size(); i++) {
+        		totalPurchased = totalPurchased + POs.get(i).getAmount();
+        	}
+        	
+        	totalPurchased = round(totalPurchased,2);
+        	request.setAttribute("totalPurchased", totalPurchased);       	
     	    
     	    forward =  "/ProjectDetails.jsp";
         }

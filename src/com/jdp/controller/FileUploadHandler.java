@@ -388,7 +388,7 @@ public class FileUploadHandler extends HttpServlet {
         	                		
         	                	}  else {
         	                		
-        	                		String poNb = DocComment.substring(13, 21);
+        	                		String poNb = DocComment.substring(2, 9);
         	                		
         	                		savedBill.setAnalyticalCode(ProjectCode);
         	                		savedBill.setPoNb(poNb);
