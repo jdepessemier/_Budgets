@@ -482,7 +482,25 @@ public class FileUploadHandler extends HttpServlet {
         	   activeProject.setDescription("Web Services UrbIS 1.0");
 			   activeProject.setManager("G. Charlot");
 			   activeProject.setActive(true);
-			   break;			   
+			   break;
+           case "41100260": 
+        	   activeProject.setDescription("BOS ASP");
+        	   activeProject.setDirector("A. Ponselet");
+			   activeProject.setManager("X. Hallot");
+			   activeProject.setActive(true);
+			   break;
+           case "39010000": 
+        	   activeProject.setDescription("IRISbox ASP");
+        	   activeProject.setDirector("A. Ponselet");
+			   activeProject.setManager("X. Brusselaers");
+			   activeProject.setActive(true);
+			   break;
+           case "39020000": 
+        	   activeProject.setDescription("NOVA ASP");
+        	   activeProject.setDirector("A. Ponselet");
+			   activeProject.setManager("S. Hendrick");
+			   activeProject.setActive(true);
+			   break;
            default: activeProject.setDescription("");
 					activeProject.setDirector("");
 					activeProject.setManager("");
