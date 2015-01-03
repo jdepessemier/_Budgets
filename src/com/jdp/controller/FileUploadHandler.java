@@ -31,16 +31,190 @@ public class FileUploadHandler extends HttpServlet {
 	private static String BUDGET_C = "Engagement";
 	
     private SnapshotDao dao;
+    private TimeSheetDao tsdao;
 
     public FileUploadHandler() {
         super();
         dao = new SnapshotDao();
+        tsdao = new TimeSheetDao();
     }
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		
 		String forward="";
         String action = request.getParameter("action");
+        
+        if (action.equalsIgnoreCase("uploadTimeSheetsData")){ //------------------------------------------------
+
+        	ServletFileUpload upload = new ServletFileUpload();
+        	
+        	try {
+    			FileItemIterator it = upload.getItemIterator(request);
+    			FileItemStream item = it.next();
+
+    	        InputStream stream = item.openStream();
+    	        
+    	        try {
+    	            InputStreamReader inputStreamReader = new InputStreamReader(stream, "ISO-8859-1");
+    	            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+    	            bufferedReader.readLine();
+    	            String line;
+    	            
+    	            int currentTS = 0;
+    	            
+    	            while ((line = bufferedReader.readLine()).charAt(0) != ';') {
+    	            	
+    	            	List<String> itemList = getItemsOfLine(line,27);
+    	            	
+    	                String FullName = itemList.get(0);
+    	                FullName = StringUtil.trimLeft(FullName);
+    	                FullName = StringUtil.trimRight(FullName);
+    	                
+    	                int tsId = 0;
+    	                String readValue = itemList.get(1);
+    	                if (!readValue.isEmpty()){
+    	                	tsId = Integer.valueOf(itemList.get(1));
+    	                }
+    	                
+    	                String Company = itemList.get(2);
+    	                Company = StringUtil.trimLeft(Company);
+    	                Company = StringUtil.trimRight(Company);
+    	                
+    	                String DepartmentHead = itemList.get(7);
+    	                DepartmentHead = StringUtil.trimLeft(DepartmentHead);
+    	                DepartmentHead = StringUtil.trimRight(DepartmentHead);
+    	                
+    	                String Service = itemList.get(8);
+    	                Service = StringUtil.trimLeft(Service);
+    	                Service = StringUtil.trimRight(Service);
+    	                
+    	                String ServiceHead = itemList.get(9);
+    	                ServiceHead = StringUtil.trimLeft(ServiceHead);
+    	                ServiceHead = StringUtil.trimRight(ServiceHead);
+    	                
+    	                int Year = 0;
+    	                readValue = itemList.get(12);
+    	                if (!readValue.isEmpty()){
+    	                	Year = Integer.valueOf(itemList.get(12));
+    	                }
+    	                
+    	                int Month = 0;
+    	                readValue = itemList.get(13);
+    	                if (!readValue.isEmpty()){
+    	                	Month = Integer.valueOf(itemList.get(13));
+    	                }
+    	                
+    	                int Week = 0;
+    	                readValue = itemList.get(14);
+    	                if (!readValue.isEmpty()){
+    	                	Week = Integer.valueOf(itemList.get(14));
+    	                }
+    	                
+    	                int Day = 0;
+    	                readValue = itemList.get(15);
+    	                if (!readValue.isEmpty()){
+    	                	Day = Integer.valueOf(itemList.get(15));
+    	                }
+    	                
+    	                int DayInWeek = 0;
+    	                readValue = itemList.get(16);
+    	                if (!readValue.isEmpty()){
+    	                	DayInWeek = Integer.valueOf(itemList.get(16));
+    	                }
+    	                
+    	                String Subject = itemList.get(18);
+    	                Subject = StringUtil.trimLeft(Subject);
+    	                Subject = StringUtil.trimRight(Subject);
+    	                
+    	                String Mission = itemList.get(19);
+    	                Mission = StringUtil.trimLeft(Mission);
+    	                Mission = StringUtil.trimRight(Mission);
+    	                
+    	                String MissionType = itemList.get(20);
+    	                MissionType = StringUtil.trimLeft(MissionType);
+    	                MissionType = StringUtil.trimRight(MissionType);
+    	                
+    	                String Activity = itemList.get(22);
+    	                Activity = StringUtil.trimLeft(Activity);
+    	                Activity = StringUtil.trimRight(Activity);  
+    	                
+    	                String Task = itemList.get(23);
+    	                Task = StringUtil.trimLeft(Task);
+    	                Task = StringUtil.trimRight(Task);
+  
+    	                int WorkInHours = 0;
+    	                readValue = itemList.get(26);
+    	                if (!readValue.isEmpty()){
+    	                	WorkInHours = Integer.valueOf(itemList.get(25));
+    	                }  
+    	                
+    	                double WorkInDays = 0.00;       
+    	                readValue = itemList.get(26);
+    	                if (!readValue.isEmpty()){
+    	                	WorkInDays = round(Double.valueOf(itemList.get(26).replace(",", ".")),2);
+    	                }
+    	            	
+    	                if (!(Service.equals("Svc. SAP"))) {
+    	                	
+        	                if (!(tsId == currentTS)) { // a new TimeSheet Id has been detected
+        	                	
+        	                	TimeSheet savedTS = tsdao.getTimeSheetById(tsId);
+        	                	
+        	                	if (savedTS == null) { // the TimeSheet does not exist in the database, then we create a new entry
+        	                		
+        	                		TimeSheet newTS = new TimeSheet(tsId,
+    		 														FullName,
+    		 														Company,
+    		 														DepartmentHead,
+    		 														Service,
+    		 														ServiceHead,
+    		 														Year,
+    		 														Month,
+    		 														Week,
+    		 														Day,
+    		 														DayInWeek,
+    		 														Mission,
+    		 														MissionType,
+    		 														Activity,
+    		 														Task,
+    		 														Subject,
+    		 														WorkInHours,
+    		 														WorkInDays);
+
+        	                		tsdao.addTimeSheet(newTS);
+        	                		
+        	                	} else { // the TimeSheet already exist in the database, then we do an update of the data
+        	                		
+        	                		savedTS.setMission(Mission);
+        	                		savedTS.setMissionType(MissionType);
+        	                		savedTS.setActivity(Activity);
+        	                		savedTS.setTask(Task);
+        	                		savedTS.setSubject(Subject);
+        	                		savedTS.setWorkInHours(WorkInHours);
+        	                		savedTS.setWorkInDays(WorkInDays);
+           		
+        	                		tsdao.addTimeSheet(savedTS);
+        	                		
+        	                	}
+        	                }     	
+    	                } 
+    	                
+    	                currentTS = tsId;
+	            	
+    	            }
+        	
+    	        } finally {
+    	            stream.close();
+    	            forward = SUCCESS;   	            
+    	        }   	        
+    		} catch (IOException e) {
+    			forward = ERROR;
+    			e.printStackTrace();
+    		} catch (FileUploadException e) {
+    			forward = ERROR;
+    			e.printStackTrace();
+    		}        	   		
+        } 
         
         if (action.equalsIgnoreCase("uploadDirectorsReportData")){ //------------------------------------------------
         	

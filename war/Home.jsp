@@ -99,6 +99,7 @@
           <li class="divider"></li>
           <li onclick="location.href='DirectorsReportUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Directors Report</a></li>
           <li onclick="location.href='MissionsSituationUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Missions Situation</a></li>
+          <li onclick="location.href='TimeSheetsUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> TimeSheets Upload</a></li>
         </ul>
       </li>                  
     </ul>
