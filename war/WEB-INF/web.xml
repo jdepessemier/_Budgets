@@ -17,8 +17,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <filter-name>ObjectifyFilter</filter-name>
         <url-pattern>/*</url-pattern>
   </filter-mapping>
- 
   
+  <servlet>
+    <description></description>
+    <display-name>TSController</display-name>
+    <servlet-name>TSController</servlet-name>
+    <servlet-class>com.jdp.controller.TSController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TSController</servlet-name>
+    <url-pattern>/TSController</url-pattern>
+  </servlet-mapping>
  
   <servlet>
     <description></description>
