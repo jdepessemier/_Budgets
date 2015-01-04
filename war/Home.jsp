@@ -68,6 +68,7 @@
   	<ul class="nav nav-tabs">
   	  <li onclick="location.href='Home.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-home"></span> Home</a></li>
   	  <li class="dropdown"><a href='#' onclick='invokeServlet("projectsStatus","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Projects Summary</a></li>
+  	  <li class="dropdown"><a href='#' onclick='invokeTimeSheetServlet("TimesheetsDetails","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> TimeSheet Summary</a></li>
           
 <!--       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Project Management <b class="caret"></b> </a> -->
 <!--       	<ul class="dropdown-menu"> -->
@@ -109,6 +110,13 @@
 function invokeServlet(value1,value2){
 	location.href = "DataController?action="+value1+"&data="+value2;
 }
+
+function invokeTimeSheetServlet(value1,value2){
+	location.href = "TSController?action="+value1+"&data="+value2;
+}
+
+
+
 </script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
