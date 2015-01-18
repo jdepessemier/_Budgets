@@ -610,43 +610,43 @@ public class FileUploadHandler extends HttpServlet {
 		   
 		   switch (analyticalcode) {
 		   
-           case "41220490": 
-        	   activeProject.setDescription("BOS");
+           case "41100260": 
+        	   activeProject.setDescription("BOS ASP");
            	   activeProject.setManager("T. Nguyen");
            	   activeProject.setActive(true);
            	   break;
-           case "41220010": 
-        	   activeProject.setDescription("BOS Rollout");
+           case "41500400": 
+        	   activeProject.setDescription("BOS Developments & Rollouts");
 			   activeProject.setManager("T. Nguyen");
 			   activeProject.setActive(true);
 			   break;
-           case "41300530": 
-        	   activeProject.setDescription("Chancellerie 4.0");
-			   activeProject.setManager("T. Nguyen");
+           case "41501200": 
+        	   activeProject.setDescription("CAS-IDM");
+			   activeProject.setManager("TBD");
 			   activeProject.setActive(true);
 			   break;   
-           case "41220400": 
-        	   activeProject.setDescription("FixMyStreet 3.0");
+           case "41500300": 
+        	   activeProject.setDescription("Fix-My-Street");
 			   activeProject.setManager("L. Afif");
 			   activeProject.setActive(true);
 			   break;				
-           case "41400380": 
-        	   activeProject.setDescription("FixMyStreet 4.0");
-			   activeProject.setManager("L. Afif");
+           case "39020000": 
+        	   activeProject.setDescription("NOVA ASP");
+			   activeProject.setManager("H. Dewyspelaere");
 			   activeProject.setActive(true);
 			   break;			
-           case "41400740": 
-        	   activeProject.setDescription("GeoPortail 2.0");
-			   activeProject.setManager("L. Afif");
+           case "41220030": 
+        	   activeProject.setDescription("NOVA 5.0");
+			   activeProject.setManager("H. Dewyspelaere");
 			   activeProject.setActive(true);
 			   break;
-           case "41110120": 
-        	   activeProject.setDescription("GIS - GeoPortail 1.0");
-			   activeProject.setManager("G. Charlot");
+           case "41500700": 
+        	   activeProject.setDescription("Plateforme M-GOVERNMENT");
+			   activeProject.setManager("TBD");
 			   activeProject.setActive(true);
 			   break;
            case "41400250": 
-        	   activeProject.setDescription("IRISbox");
+        	   activeProject.setDescription("IRISbox Developments");
 			   activeProject.setManager("F. Monaco");
 			   activeProject.setActive(true);
 			   break;			   
@@ -655,87 +655,34 @@ public class FileUploadHandler extends HttpServlet {
 			   activeProject.setManager("D. Le Grelle");
 			   activeProject.setActive(true);
 			   break;			   
-           case "41400750": 
-        	   activeProject.setDescription("Migration be.brussels (PRB & CIRB)");
-			   activeProject.setManager("D. Butaye");
-			   activeProject.setActive(true);
-			   break;			   
-           case "41400360": 
-        	   activeProject.setDescription("Rollout NOVA Bruxelles");
-			   activeProject.setManager("R. Himpe");
-			   activeProject.setActive(true);
-			   break;			   
-           case "41220480": 
-        	   activeProject.setDescription("NOVA 4.x");
-			   activeProject.setManager("H. Dewyspelaere");
-			   activeProject.setActive(true);
-			   break;			   
-           case "41220030": 
-        	   activeProject.setDescription("NOVA 5.0");
-			   activeProject.setManager("H. Dewyspelaere");
-			   activeProject.setActive(true);
-			   break;			   
-           case "41400260": 
-        	   activeProject.setDescription("Photos Obliques");
-			   activeProject.setManager("E. Auquière");
-			   activeProject.setActive(true);
-			   break;			   
-           case "41400400": 
-        	   activeProject.setDescription("Portail Régional");
-			   activeProject.setManager("F. Monaco");
-			   activeProject.setActive(true);
-			   break;			
-           case "41300440": 
-        	   activeProject.setDescription("SEO");
-			   activeProject.setManager("L. Afif");
-			   activeProject.setActive(true);
-			   break;			   
-           case "41300000": 
-        	   activeProject.setDescription("SHARE CPAS 4.0");
-			   activeProject.setManager("R. Himpe");
-			   activeProject.setActive(true);
-			   break;			   
            case "41400600": 
         	   activeProject.setDescription("SHARE CPAS 5.0");
 			   activeProject.setManager("R. Himpe");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41500800": 
+        	   activeProject.setDescription("Software Architect");
+			   activeProject.setManager("J. De Pessemier");
+			   activeProject.setActive(true);
+			   break;			   			   			   
+           case "41500900": 
+        	   activeProject.setDescription("URBIS AAS - Migration");
+			   activeProject.setManager("V. Streignard");
+			   activeProject.setActive(true);
+			   break;			   
+           case "41400180": 
+        	   activeProject.setDescription("Support Developments Tools");
+			   activeProject.setManager("J. De Pessemier");
 			   activeProject.setActive(true);
 			   break;			   
            case "41220170": 
         	   activeProject.setDescription("Support Testing");
 			   activeProject.setManager("J. De Pessemier");
 			   activeProject.setActive(true);
-			   break;			   
-           case "41400180": 
-        	   activeProject.setDescription("Support Tools");
-			   activeProject.setManager("N. Jelinski");
-			   activeProject.setActive(true);
-			   break;
-           case "41220370": 
-        	   activeProject.setDescription("UrbIS-aaS 3.0");
+			   break;			   		   
+           case "41501000": 
+        	   activeProject.setDescription("URBIS Online 3D");
 			   activeProject.setManager("V. Streignard");
-			   activeProject.setActive(true);
-			   break;			   
-           case "41220390": 
-        	   activeProject.setDescription("Web Services UrbIS 1.0");
-			   activeProject.setManager("G. Charlot");
-			   activeProject.setActive(true);
-			   break;
-           case "41100260": 
-        	   activeProject.setDescription("BOS ASP");
-        	   activeProject.setDirector("A. Ponselet");
-			   activeProject.setManager("X. Hallot");
-			   activeProject.setActive(true);
-			   break;
-           case "39010000": 
-        	   activeProject.setDescription("IRISbox ASP");
-        	   activeProject.setDirector("A. Ponselet");
-			   activeProject.setManager("X. Brusselaers");
-			   activeProject.setActive(true);
-			   break;
-           case "39020000": 
-        	   activeProject.setDescription("NOVA ASP");
-        	   activeProject.setDirector("A. Ponselet");
-			   activeProject.setManager("S. Hendrick");
 			   activeProject.setActive(true);
 			   break;
            default: activeProject.setDescription("");
