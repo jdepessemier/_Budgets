@@ -145,7 +145,8 @@ public class SnapshotDao {
     public List<PurchaseOrder> getPOByAnalyticalCode(String ca) {
     	
     	List<PurchaseOrder> myPOs = ofy().load().type(PurchaseOrder.class)
-    			.filter("analyticalCode =", ca).list();
+    			.filter("analyticalCode =", ca)
+    	        .order("documentNb").list();
 		
 		return myPOs;	
     }
@@ -184,7 +185,7 @@ public class SnapshotDao {
     
     public List<Bill> getBillByAnalyticalCode(String ca) {
 		
-		List<Bill> myBills = ofy().load().type(Bill.class).filter("analyticalCode =", ca).list();
+		List<Bill> myBills = ofy().load().type(Bill.class).filter("analyticalCode =", ca).order("documentNb").list();
 			
 		return myBills;
     }

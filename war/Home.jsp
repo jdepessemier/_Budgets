@@ -49,57 +49,63 @@
 	<div class="container">
 	  <br>
 	  <div class="row">
-	    <div class="col-lg-4">
-	    	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a>
+	    <div class="col-md-3" id="portal-logo-wrapper"><a href="http://cirb.brussels/fr"> 
+                <img src="http://cirb.brussels/fr/++theme++plonetheme.bric/images/cirb-brussels-it-is-for-you.png" alt="cirb.brussels - IT is for you" />
+            </a></div>
+	    <div class="col-md-6">
+	    		<h2><font color=#164397>Projects Allocations Management</font></h2>
 	    </div>
-	    <div class="col-lg-8">
-	    	 	<h3>PROJECTS ALLOCATIONS MANAGEMENT</h3>
+	    <div class="col-md-3">
 	    	  <p class="text-info"><span class="glyphicon glyphicon-user"></span>
 	    	  	&nbsp;<c:out value="${firstName}"/> <c:out value="${lastName}"/>
 	    	  	&nbsp;&nbsp;<a href='#' onclick='invokeServlet("logout","")'>
 	    	  	<span class="glyphicon glyphicon-log-out"></span></a></p>
-	    	 	<hr>
 	    </div>
 	  </div>
 	</div>
                 
   <div class="container">
+  
+  	<c:choose>
+    	<c:when test="${role=='Administrator'}">
+      	<c:set var="visibility" scope="application" value="active"/>
+      </c:when>
+      <c:otherwise>
+        <c:set var="visibility" scope="application" value="disabled"/>
+      </c:otherwise>
+    </c:choose> 
+  
   	<ul class="nav nav-tabs">
-  	  <li onclick="location.href='Home.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-  	  <li class="dropdown"><a href='#' onclick='invokeServlet("projectsStatus","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Projects Summary</a></li>
-  	  <li class="dropdown"><a href='#' onclick='invokeTimeSheetServlet("TimesheetsDetails","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> TimeSheet Summary</a></li>
-          
-<!--       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Project Management <b class="caret"></b> </a> -->
-<!--       	<ul class="dropdown-menu"> -->
-<!--           <li class="dropdown"><a href='#' onclick='invokeServlet("listProjects","")' data-toggle="tab">Projects List</a></li> -->
-<!--           <li class="dropdown"><a href='#' onclick='invokeServlet("projectsStatus","")' data-toggle="tab">Projects Status</a></li> -->
-<!--         </ul> -->
-<!--       </li>                       -->
-<!--       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Projets <b class="caret"></b> </a> -->
-<!--       	<ul class="dropdown-menu"> -->
-<%--         	<c:forEach items="${projects}" var="project"> --%>
-<%--           	<li class="dropdown" ><a id="test" value="${project.analyticalCode}" href='#' onclick='invokeServlet("getProject","${project.analyticalCode}")' data-toggle="tab"><c:out value="${project.description}" /></a></li> --%>
-<%--           </c:forEach> --%>
-<!--         </ul>     -->
-<!--       </li>  -->
+  	
+<!--   	  <li class="dropdown"><a href='#' onclick='invokeServlet("projectsStatus","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Projects Summary</a> -->
+<!--       </li> -->
+ 
+       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list"></span> Projects Management <b class="caret"></b> </a>
+      	<ul  class="dropdown-menu">
+      		<li><a href='#' onclick='invokeTimeSheetServlet("MissionsList","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Missions List</a></li>
+      	</ul>
+      </li>
       
-      <c:choose>
-      	<c:when test="${role=='Administrator'}">
-        	<c:set var="visibility" scope="application" value="active"/>
-        </c:when>
-        <c:otherwise>
-        	<c:set var="visibility" scope="application" value="disabled"/>
-        </c:otherwise>
-      </c:choose>                 
+      <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list"></span> Teams Management <b class="caret"></b> </a>
+      	<ul  class="dropdown-menu">
+      		<li><a href='#' onclick='invokeTimeSheetServlet("GetActiveTeamMembers","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Team Members</a></li>
+<!--       		<li><a href='#' onclick='invokeTimeSheetServlet("TimesheetsSummaries","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> TimeSheets Summary</a></li> -->
+<!--       		<li><a href='#' onclick='invokeTimeSheetServlet("TimesheetsDetails","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> TimeSheets Details</a></li> -->
+      	</ul>
+      </li>                                  
       
       <li class="${visibility}" class="dropdown"> <a class="${visibility}" class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-wrench"></span> Administration <b class="caret"></b> </a>
       	<ul  class="dropdown-menu">
         	<li onclick="location.href='Registration.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Register User</a></li>
-          <li class="dropdown"><a href='#' onclick='invokeServlet("listUsers","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> List Users</a></li>
+          <li class="dropdown"><a href='#' onclick='invokeServlet("listUsers","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Users List</a></li>
           <li class="divider"></li>
-          <li onclick="location.href='DirectorsReportUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Directors Report</a></li>
-          <li onclick="location.href='MissionsSituationUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Missions Situation</a></li>
-          <li onclick="location.href='TimeSheetsUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> TimeSheets Upload</a></li>
+          <li><a href='#' onclick='invokeTimeSheetServlet("GetTeamMembers","")' data-toggle="tab"><span class="glyphicon glyphicon-list"></span> Team Members List</a></li>
+          <li class="divider"></li>
+<!--           <li onclick="location.href='DirectorsReportUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Directors Report</a></li> -->
+<!--           <li onclick="location.href='MissionsSituationUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Missions Situation</a></li> -->
+          <li onclick="location.href='TeamUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Team Members Upload</a></li>
+<!--           <li onclick="location.href='TimeSheetsUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> TimeSheets Upload</a></li> -->
+          <li onclick="location.href='SummariesUpload.jsp';"><a data-toggle="tab"><span class="glyphicon glyphicon-cloud-upload"></span> Summary Data Upload</a></li>
         </ul>
       </li>                  
     </ul>

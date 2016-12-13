@@ -27,12 +27,11 @@
 	<div class="container">
 	  <br>
 	  <div class="row">
-	    <div class="col-lg-4">
-	    	<a href="http://www.cirb.irisnet.be" target="_blank"><img alt="CIRB" src="https://irisbox.irisnet.be/resources/img/cirb-brussels.png" class="pull-right"></a>
-	    </div>
-	    <div class="col-lg-8">
-	    	 	<h3>PROJECTS ALLOCATIONS MANAGEMENT</h3>
-	    	 	<hr>
+	    <div class="col-md-3" id="portal-logo-wrapper"><a href="http://cirb.brussels/fr"> 
+                <img src="http://cirb.brussels/fr/++theme++plonetheme.bric/images/cirb-brussels-it-is-for-you.png" alt="cirb.brussels - IT is for you" />
+            </a></div>
+	    <div class="col-md-9">
+	    		<h2><font color=#164397>Projects Allocations Management</font></h2>
 	    </div>
 	  </div>
 	</div>

@@ -6,4 +6,54 @@
         <property name="documentType" direction="asc"/>
         <property name="documentNb" direction="asc"/>
     </datastore-index>
+    <datastore-index kind="Bill" ancestor="false" source="manual">
+        <property name="analyticalCode" direction="asc"/>
+        <property name="documentNb" direction="asc"/>
+    </datastore-index>
+        <datastore-index kind="PurchaseOrder" ancestor="false" source="manual">
+        <property name="analyticalCode" direction="asc"/>
+        <property name="documentNb" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="Team" ancestor="false" source="manual"> 
+        <property name="serviceName" direction="asc"/>
+        <property name="teamMemberName" direction="asc"/> 
+    </datastore-index>
+    <datastore-index kind="Team" ancestor="false" source="manual">
+        <property name="isActive" direction="asc"/>
+        <property name="teamMemberName" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="Allocation" ancestor="false" source="manual"> 
+        <property name="fullName" direction="asc"/>
+        <property name="year" direction="asc"/>
+        <property name="month" direction="asc"/>
+        <property name="week" direction="asc"/>
+        <property name="day" direction="asc"/>
+        <property name="mission" direction="asc"/>
+        <property name="activity" direction="asc"/>       
+    </datastore-index>
+    <datastore-index kind="Prestation" ancestor="false" source="manual"> 
+        <property name="personFullName" direction="asc"/>
+        <property name="missionName" direction="asc"/>
+        <property name="activityName" direction="asc"/> 
+        <property name="year" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="Prestation" ancestor="false" source="manual">
+        <property name="missionType" direction="asc"/>
+        <property name="personName" direction="asc"/>
+        <property name="missionName" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="Prestation" ancestor="false" source="manual">
+        <property name="missionName" direction="asc"/>
+        <property name="personName" direction="asc"/>
+    </datastore-index>
+        <datastore-index kind="Prestation" ancestor="false" source="manual">
+        <property name="missionType" direction="asc"/>
+        <property name="personName" direction="asc"/>
+        <property name="activityName" direction="asc"/>
+    </datastore-index>
+        <datastore-index kind="Prestation" ancestor="false" source="manual">
+        <property name="activityName" direction="asc"/>
+        <property name="personName" direction="asc"/>
+        <property name="missionName" direction="asc"/>
+    </datastore-index>
 </datastore-indexes>
